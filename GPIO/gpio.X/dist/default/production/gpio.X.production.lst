@@ -1,0 +1,2227 @@
+
+
+Microchip MPLAB XC8 Assembler V2.31 build 20201012212115 
+                                                                                               Wed Nov 18 19:22:52 2020
+
+Microchip MPLAB XC8 C Compiler v2.31 (Free license) build 20201012212115 Og1 
+     1                           	processor	18F4550
+     2                           	fnconf	rparam,??,?,0
+     3                           	pagewidth 120
+     4                           	opt	flic
+     5                           	psect	idataCOMRAM,global,class=CODE,delta=1,noexec
+     6                           	psect	cinit,global,reloc=2,class=CODE,delta=1
+     7                           	psect	dataCOMRAM,global,class=COMRAM,space=1,delta=1,lowdata,noexec
+     8                           	psect	cstackCOMRAM,global,class=COMRAM,space=1,delta=1,lowdata,noexec
+     9                           	psect	text0,global,reloc=2,class=CODE,delta=1
+    10                           	psect	text1,global,reloc=2,class=CODE,delta=1
+    11                           	psect	text2,global,reloc=2,class=CODE,delta=1
+    12                           	psect	text3,global,reloc=2,class=CODE,delta=1
+    13                           	psect	text4,global,reloc=2,class=CODE,delta=1
+    14                           	psect	text5,global,reloc=2,class=CODE,delta=1
+    15                           	psect	text6,global,reloc=2,class=CODE,delta=1
+    16                           	psect	intsave_regs,global,class=BIGRAM,space=1,delta=1,noexec
+    17                           	psect	rparam,global,class=COMRAM,space=1,delta=1,noexec
+    18                           	psect	idloc,global,abs,ovrld,class=IDLOC,space=5,delta=1,noexec
+    19                           	psect	config,global,abs,ovrld,class=CONFIG,space=4,delta=1,noexec
+    20  0000                     
+    21                           ; Version 2.20
+    22                           ; Generated 12/02/2020 GMT
+    23                           ; 
+    24                           ; Copyright © 2020, Microchip Technology Inc. and its subsidiaries ("Microchip")
+    25                           ; All rights reserved.
+    26                           ; 
+    27                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+      +                          ip").
+    28                           ; 
+    29                           ; Redistribution and use in source and binary forms, with or without modification, are
+    30                           ; permitted provided that the following conditions are met:
+    31                           ; 
+    32                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+      +                          t of
+    33                           ;        conditions and the following disclaimer.
+    34                           ; 
+    35                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+      +                          list
+    36                           ;        of conditions and the following disclaimer in the documentation and/or other
+    37                           ;        materials provided with the distribution.
+    38                           ; 
+    39                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+      +                          is
+    40                           ;        software without specific prior written permission.
+    41                           ; 
+    42                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+    43                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+      +                          OR
+    44                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+      +                          T,
+    45                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+    46                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+    47                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+      +                          RICT
+    48                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+      +                          SE OF
+    49                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    50                           ; 
+    51                           ; 
+    52                           ; Code-generator required, PIC18F4550 Definitions
+    53                           ; 
+    54                           ; SFR Addresses
+    55  0000                     
+    56                           	psect	idataCOMRAM
+    57  0076A5                     __pidataCOMRAM:
+    58                           	callstack 0
+    59                           
+    60                           ;initializer for _velocidad
+    61  0076A5  0001               	dw	1
+    62  0076A7  0000               	dw	0
+    63                           
+    64                           ;initializer for _efecto
+    65  0076A9  01                 	db	1
+    66  0000                     _PORTBbits	set	3969
+    67  0000                     _INTCON2bits	set	4081
+    68  0000                     _TRISBbits	set	3987
+    69  0000                     _LATD	set	3980
+    70  0000                     _TRISD	set	3989
+    71                           
+    72                           ; #config settings
+    73                           
+    74                           	psect	cinit
+    75  0076AA                     __pcinit:
+    76                           	callstack 0
+    77  0076AA                     start_initialization:
+    78                           	callstack 0
+    79  0076AA                     __initialization:
+    80                           	callstack 0
+    81                           
+    82                           ; Initialize objects allocated to COMRAM (5 bytes)
+    83                           ; load TBLPTR registers with __pidataCOMRAM
+    84  0076AA  0EA5               	movlw	low __pidataCOMRAM
+    85  0076AC  6EF6               	movwf	tblptrl,c
+    86  0076AE  0E76               	movlw	high __pidataCOMRAM
+    87  0076B0  6EF7               	movwf	tblptrh,c
+    88  0076B2  0E00               	movlw	low (__pidataCOMRAM shr (0+16))
+    89  0076B4  6EF8               	movwf	tblptru,c
+    90  0076B6  EE00  F00C         	lfsr	0,__pdataCOMRAM
+    91  0076BA  EE10 F005          	lfsr	1,5
+    92  0076BE                     copy_data0:
+    93  0076BE  0009               	tblrd		*+
+    94  0076C0  CFF5 FFEE          	movff	tablat,postinc0
+    95  0076C4  50E5               	movf	postdec1,w,c
+    96  0076C6  50E1               	movf	fsr1l,w,c
+    97  0076C8  E1FA               	bnz	copy_data0
+    98  0076CA                     end_of_initialization:
+    99                           	callstack 0
+   100  0076CA                     __end_of__initialization:
+   101                           	callstack 0
+   102  0076CA  0E00               	movlw	low (__Lmediumconst shr (0+16))
+   103  0076CC  6EF8               	movwf	tblptru,c
+   104  0076CE  0100               	movlb	0
+   105  0076D0  EF6A  F03B         	goto	_main	;jump to C main() function
+   106                           
+   107                           	psect	dataCOMRAM
+   108  00000C                     __pdataCOMRAM:
+   109                           	callstack 0
+   110  00000C                     _velocidad:
+   111                           	callstack 0
+   112  00000C                     	ds	4
+   113  000010                     _efecto:
+   114                           	callstack 0
+   115  000010                     	ds	1
+   116                           
+   117                           	psect	cstackCOMRAM
+   118  000001                     __pcstackCOMRAM:
+   119                           	callstack 0
+   120  000001                     ??_secuencial_Efecto1:
+   121  000001                     ??_secuencial_Efecto2:
+   122  000001                     ??_secuencial_Efecto3:
+   123  000001                     ??_secuencial_Efecto4:
+   124  000001                     ??_secuencial_Efecto5:
+   125  000001                     ??_secuencial_Efecto6:
+   126  000001                     
+   127                           ; 2 bytes @ 0x0
+   128  000001                     	ds	2
+   129  000003                     secuencial_Efecto1@i:
+   130                           	callstack 0
+   131  000003                     secuencial_Efecto3@i:
+   132                           	callstack 0
+   133                           
+   134                           ; 2 bytes @ 0x2
+   135  000003                     	ds	1
+   136  000004                     secuencial_Efecto4@i:
+   137                           	callstack 0
+   138                           
+   139                           ; 2 bytes @ 0x3
+   140  000004                     	ds	1
+   141  000005                     secuencial_Efecto2@j:
+   142                           	callstack 0
+   143  000005                     secuencial_Efecto5@j:
+   144                           	callstack 0
+   145  000005                     secuencial_Efecto6@j:
+   146                           	callstack 0
+   147                           
+   148                           ; 2 bytes @ 0x4
+   149  000005                     	ds	1
+   150  000006                     secuencial_Efecto4@m:
+   151                           	callstack 0
+   152                           
+   153                           ; 2 bytes @ 0x5
+   154  000006                     	ds	1
+   155  000007                     secuencial_Efecto2@i:
+   156                           	callstack 0
+   157  000007                     secuencial_Efecto5@i:
+   158                           	callstack 0
+   159  000007                     secuencial_Efecto6@i:
+   160                           	callstack 0
+   161                           
+   162                           ; 2 bytes @ 0x6
+   163  000007                     	ds	1
+   164  000008                     secuencial_Efecto4@n:
+   165                           	callstack 0
+   166                           
+   167                           ; 2 bytes @ 0x7
+   168  000008                     	ds	2
+   169  00000A                     ??_main:
+   170                           
+   171                           ; 1 bytes @ 0x9
+   172  00000A                     	ds	2
+   173                           
+   174 ;;
+   175 ;;Main: autosize = 0, tempsize = 2, incstack = 0, save=0
+   176 ;;
+   177 ;; *************** function _main *****************
+   178 ;; Defined at:
+   179 ;;		line 35 in file "secuencia_main.c"
+   180 ;; Parameters:    Size  Location     Type
+   181 ;;		None
+   182 ;; Auto vars:     Size  Location     Type
+   183 ;;		None
+   184 ;; Return value:  Size  Location     Type
+   185 ;;                  2   32[None  ] int 
+   186 ;; Registers used:
+   187 ;;		wreg, status,2, status,0, cstack
+   188 ;; Tracked objects:
+   189 ;;		On entry : 0/0
+   190 ;;		On exit  : 0/0
+   191 ;;		Unchanged: 0/0
+   192 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   193 ;;      Params:         0       0       0       0       0       0       0       0       0
+   194 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   195 ;;      Temps:          2       0       0       0       0       0       0       0       0
+   196 ;;      Totals:         2       0       0       0       0       0       0       0       0
+   197 ;;Total ram usage:        2 bytes
+   198 ;; Hardware stack levels required when called:    1
+   199 ;; This function calls:
+   200 ;;		_secuencial_Efecto1
+   201 ;;		_secuencial_Efecto2
+   202 ;;		_secuencial_Efecto3
+   203 ;;		_secuencial_Efecto4
+   204 ;;		_secuencial_Efecto5
+   205 ;;		_secuencial_Efecto6
+   206 ;; This function is called by:
+   207 ;;		Startup code after reset
+   208 ;; This function uses a non-reentrant model
+   209 ;;
+   210                           
+   211                           	psect	text0
+   212  0076D4                     __ptext0:
+   213                           	callstack 0
+   214  0076D4                     _main:
+   215                           	callstack 30
+   216  0076D4                     
+   217                           ;secuencia_main.c: 36:     TRISD = 0;
+   218  0076D4  0E00               	movlw	0
+   219  0076D6  6E95               	movwf	149,c	;volatile
+   220                           
+   221                           ;secuencia_main.c: 37:     LATD = 0;
+   222  0076D8  0E00               	movlw	0
+   223  0076DA  6E8C               	movwf	140,c	;volatile
+   224  0076DC                     
+   225                           ;secuencia_main.c: 38:     TRISBbits.TRISB7 = 1;
+   226  0076DC  8E93               	bsf	147,7,c	;volatile
+   227  0076DE                     
+   228                           ;secuencia_main.c: 39:     TRISBbits.TRISB6 = 0;
+   229  0076DE  9C93               	bcf	147,6,c	;volatile
+   230  0076E0                     
+   231                           ;secuencia_main.c: 40:     INTCON2bits.RBPU = 0;
+   232  0076E0  9EF1               	bcf	241,7,c	;volatile
+   233  0076E2                     l1024:
+   234                           
+   235                           ;secuencia_main.c: 43:         if (!PORTBbits.RB7) {
+   236  0076E2  BE81               	btfsc	129,7,c	;volatile
+   237  0076E4  EF76  F03B         	goto	u531
+   238  0076E8  EF78  F03B         	goto	u530
+   239  0076EC                     u531:
+   240  0076EC  EF9E  F03B         	goto	l1046
+   241  0076F0                     u530:
+   242  0076F0                     
+   243                           ;secuencia_main.c: 44:             efecto++;
+   244  0076F0  2A10               	incf	_efecto^0,f,c
+   245  0076F2                     
+   246                           ;secuencia_main.c: 45:             if(efecto==7){efecto=1;}
+   247  0076F2  0E07               	movlw	7
+   248  0076F4  1810               	xorwf	_efecto^0,w,c
+   249  0076F6  A4D8               	btfss	status,2,c
+   250  0076F8  EF80  F03B         	goto	u541
+   251  0076FC  EF82  F03B         	goto	u540
+   252  007700                     u541:
+   253  007700  EF9E  F03B         	goto	l1046
+   254  007704                     u540:
+   255  007704  0E01               	movlw	1
+   256  007706  6E10               	movwf	_efecto^0,c
+   257  007708  EF9E  F03B         	goto	l1046
+   258  00770C                     l1032:
+   259  00770C  ECC5  F03B         	call	_secuencial_Efecto1	;wreg free
+   260                           
+   261                           ;secuencia_main.c: 50:                 break;
+   262  007710  EF71  F03B         	goto	l1024
+   263  007714                     l1034:
+   264  007714  ECC4  F03D         	call	_secuencial_Efecto2	;wreg free
+   265                           
+   266                           ;secuencia_main.c: 52:                 break;
+   267  007718  EF71  F03B         	goto	l1024
+   268  00771C                     l1036:
+   269  00771C  EC69  F03C         	call	_secuencial_Efecto3	;wreg free
+   270                           
+   271                           ;secuencia_main.c: 54:                 break;
+   272  007720  EF71  F03B         	goto	l1024
+   273  007724                     l1038:
+   274  007724  EC34  F03F         	call	_secuencial_Efecto4	;wreg free
+   275                           
+   276                           ;secuencia_main.c: 56:                 break;
+   277  007728  EF71  F03B         	goto	l1024
+   278  00772C                     l1040:
+   279  00772C  EC7C  F03E         	call	_secuencial_Efecto5	;wreg free
+   280                           
+   281                           ;secuencia_main.c: 58:                 break;
+   282  007730  EF71  F03B         	goto	l1024
+   283  007734                     l1042:
+   284  007734  EC0D  F03D         	call	_secuencial_Efecto6	;wreg free
+   285                           
+   286                           ;secuencia_main.c: 60:                 break;
+   287  007738  EF71  F03B         	goto	l1024
+   288  00773C                     l1046:
+   289  00773C  5010               	movf	_efecto^0,w,c
+   290  00773E  6E0A               	movwf	??_main^0,c
+   291  007740  6A0B               	clrf	(??_main+1)^0,c
+   292                           
+   293                           ; Switch on 2 bytes has been partitioned into a top level switch of size 1, and 1 sub-sw
+      +                          itches
+   294                           ; Switch size 1, requested type "simple"
+   295                           ; Number of cases is 1, Range of values is 0 to 0
+   296                           ; switch strategies available:
+   297                           ; Name         Instructions Cycles
+   298                           ; simple_byte            4     3 (average)
+   299                           ;	Chosen strategy is simple_byte
+   300  007742  500B               	movf	(??_main+1)^0,w,c
+   301  007744  0A00               	xorlw	0	; case 0
+   302  007746  B4D8               	btfsc	status,2,c
+   303  007748  EFA8  F03B         	goto	l1056
+   304  00774C  EF71  F03B         	goto	l1024
+   305  007750                     l1056:
+   306                           
+   307                           ; Switch size 1, requested type "simple"
+   308                           ; Number of cases is 6, Range of values is 1 to 6
+   309                           ; switch strategies available:
+   310                           ; Name         Instructions Cycles
+   311                           ; simple_byte           19    10 (average)
+   312                           ;	Chosen strategy is simple_byte
+   313  007750  500A               	movf	??_main^0,w,c
+   314  007752  0A01               	xorlw	1	; case 1
+   315  007754  B4D8               	btfsc	status,2,c
+   316  007756  EF86  F03B         	goto	l1032
+   317  00775A  0A03               	xorlw	3	; case 2
+   318  00775C  B4D8               	btfsc	status,2,c
+   319  00775E  EF8A  F03B         	goto	l1034
+   320  007762  0A01               	xorlw	1	; case 3
+   321  007764  B4D8               	btfsc	status,2,c
+   322  007766  EF8E  F03B         	goto	l1036
+   323  00776A  0A07               	xorlw	7	; case 4
+   324  00776C  B4D8               	btfsc	status,2,c
+   325  00776E  EF92  F03B         	goto	l1038
+   326  007772  0A01               	xorlw	1	; case 5
+   327  007774  B4D8               	btfsc	status,2,c
+   328  007776  EF96  F03B         	goto	l1040
+   329  00777A  0A03               	xorlw	3	; case 6
+   330  00777C  B4D8               	btfsc	status,2,c
+   331  00777E  EF9A  F03B         	goto	l1042
+   332  007782  EF71  F03B         	goto	l1024
+   333  007786  EF00  F000         	goto	start
+   334  00778A                     __end_of_main:
+   335                           	callstack 0
+   336                           
+   337 ;; *************** function _secuencial_Efecto6 *****************
+   338 ;; Defined at:
+   339 ;;		line 144 in file "secuencia_main.c"
+   340 ;; Parameters:    Size  Location     Type
+   341 ;;		None
+   342 ;; Auto vars:     Size  Location     Type
+   343 ;;  i               2    6[COMRAM] int 
+   344 ;;  j               2    4[COMRAM] int 
+   345 ;; Return value:  Size  Location     Type
+   346 ;;                  1    wreg      void 
+   347 ;; Registers used:
+   348 ;;		wreg, status,2, status,0
+   349 ;; Tracked objects:
+   350 ;;		On entry : 0/0
+   351 ;;		On exit  : 0/0
+   352 ;;		Unchanged: 0/0
+   353 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   354 ;;      Params:         0       0       0       0       0       0       0       0       0
+   355 ;;      Locals:         4       0       0       0       0       0       0       0       0
+   356 ;;      Temps:          4       0       0       0       0       0       0       0       0
+   357 ;;      Totals:         8       0       0       0       0       0       0       0       0
+   358 ;;Total ram usage:        8 bytes
+   359 ;; Hardware stack levels used:    1
+   360 ;; This function calls:
+   361 ;;		Nothing
+   362 ;; This function is called by:
+   363 ;;		_main
+   364 ;; This function uses a non-reentrant model
+   365 ;;
+   366                           
+   367                           	psect	text1
+   368  007A1A                     __ptext1:
+   369                           	callstack 0
+   370  007A1A                     _secuencial_Efecto6:
+   371                           	callstack 30
+   372  007A1A                     
+   373                           ;secuencia_main.c: 145:     for (int i = 0, j = 4; i < 4; i++, j++) {
+   374  007A1A  0E00               	movlw	0
+   375  007A1C  6E08               	movwf	(secuencial_Efecto6@i+1)^0,c
+   376  007A1E  0E00               	movlw	0
+   377  007A20  6E07               	movwf	secuencial_Efecto6@i^0,c
+   378  007A22  0E00               	movlw	0
+   379  007A24  6E06               	movwf	(secuencial_Efecto6@j+1)^0,c
+   380  007A26  0E04               	movlw	4
+   381  007A28  6E05               	movwf	secuencial_Efecto6@j^0,c
+   382  007A2A                     l982:
+   383  007A2A  BE08               	btfsc	(secuencial_Efecto6@i+1)^0,7,c
+   384  007A2C  EF21  F03D         	goto	u441
+   385  007A30  5008               	movf	(secuencial_Efecto6@i+1)^0,w,c
+   386  007A32  E109               	bnz	u440
+   387  007A34  0E04               	movlw	4
+   388  007A36  5C07               	subwf	secuencial_Efecto6@i^0,w,c
+   389  007A38  A0D8               	btfss	status,0,c
+   390  007A3A  EF21  F03D         	goto	u441
+   391  007A3E  EF23  F03D         	goto	u440
+   392  007A42                     u441:
+   393  007A42  EF25  F03D         	goto	l986
+   394  007A46                     u440:
+   395  007A46  EFC3  F03D         	goto	l130
+   396  007A4A                     l986:
+   397                           
+   398                           ;secuencia_main.c: 146:         LATD = (1 << i) + (1 << j);
+   399  007A4A  C005  F001         	movff	secuencial_Efecto6@j,??_secuencial_Efecto6
+   400  007A4E  0E01               	movlw	1
+   401  007A50  6E02               	movwf	(??_secuencial_Efecto6+1)^0,c
+   402  007A52  2A01               	incf	??_secuencial_Efecto6^0,f,c
+   403  007A54  EF2E  F03D         	goto	u454
+   404  007A58                     u455:
+   405  007A58  90D8               	bcf	status,0,c
+   406  007A5A  3602               	rlcf	(??_secuencial_Efecto6+1)^0,f,c
+   407  007A5C                     u454:
+   408  007A5C  2E01               	decfsz	??_secuencial_Efecto6^0,f,c
+   409  007A5E  EF2C  F03D         	goto	u455
+   410  007A62  C007  F003         	movff	secuencial_Efecto6@i,??_secuencial_Efecto6+2
+   411  007A66  0E01               	movlw	1
+   412  007A68  6E04               	movwf	(??_secuencial_Efecto6+3)^0,c
+   413  007A6A  2A03               	incf	(??_secuencial_Efecto6+2)^0,f,c
+   414  007A6C  EF3A  F03D         	goto	u464
+   415  007A70                     u465:
+   416  007A70  90D8               	bcf	status,0,c
+   417  007A72  3604               	rlcf	(??_secuencial_Efecto6+3)^0,f,c
+   418  007A74                     u464:
+   419  007A74  2E03               	decfsz	(??_secuencial_Efecto6+2)^0,f,c
+   420  007A76  EF38  F03D         	goto	u465
+   421  007A7A  5004               	movf	(??_secuencial_Efecto6+3)^0,w,c
+   422  007A7C  2402               	addwf	(??_secuencial_Efecto6+1)^0,w,c
+   423  007A7E  6E8C               	movwf	140,c	;volatile
+   424                           
+   425                           ;secuencia_main.c: 147:         if(velocidad==1){_delay((unsigned long)((50)*(800000/400
+      +                          0.0)));}
+   426  007A80  040C               	decf	_velocidad^0,w,c
+   427  007A82  100D               	iorwf	(_velocidad+1)^0,w,c
+   428  007A84  100E               	iorwf	(_velocidad+2)^0,w,c
+   429  007A86  100F               	iorwf	(_velocidad+3)^0,w,c
+   430  007A88  A4D8               	btfss	status,2,c
+   431  007A8A  EF49  F03D         	goto	u471
+   432  007A8E  EF4B  F03D         	goto	u470
+   433  007A92                     u471:
+   434  007A92  EF54  F03D         	goto	l990
+   435  007A96                     u470:
+   436  007A96  0E0D               	movlw	13
+   437  007A98  6E01               	movwf	??_secuencial_Efecto6^0,c
+   438  007A9A  0EFC               	movlw	252
+   439  007A9C                     u557:
+   440  007A9C  2EE8               	decfsz	wreg,f,c
+   441  007A9E  D7FE               	bra	u557
+   442  007AA0  2E01               	decfsz	??_secuencial_Efecto6^0,f,c
+   443  007AA2  D7FC               	bra	u557
+   444  007AA4  EF95  F03D         	goto	l1002
+   445  007AA8                     l990:
+   446  007AA8  0E02               	movlw	2
+   447  007AAA  180C               	xorwf	_velocidad^0,w,c
+   448  007AAC  100D               	iorwf	(_velocidad+1)^0,w,c
+   449  007AAE  100E               	iorwf	(_velocidad+2)^0,w,c
+   450  007AB0  100F               	iorwf	(_velocidad+3)^0,w,c
+   451  007AB2  A4D8               	btfss	status,2,c
+   452  007AB4  EF5E  F03D         	goto	u481
+   453  007AB8  EF60  F03D         	goto	u480
+   454  007ABC                     u481:
+   455  007ABC  EF6A  F03D         	goto	l994
+   456  007AC0                     u480:
+   457  007AC0  0E1A               	movlw	26
+   458  007AC2  6E01               	movwf	??_secuencial_Efecto6^0,c
+   459  007AC4  0EF8               	movlw	248
+   460  007AC6                     u567:
+   461  007AC6  2EE8               	decfsz	wreg,f,c
+   462  007AC8  D7FE               	bra	u567
+   463  007ACA  2E01               	decfsz	??_secuencial_Efecto6^0,f,c
+   464  007ACC  D7FC               	bra	u567
+   465  007ACE  D000               	nop2	
+   466  007AD0  EF95  F03D         	goto	l1002
+   467  007AD4                     l994:
+   468  007AD4  0E03               	movlw	3
+   469  007AD6  180C               	xorwf	_velocidad^0,w,c
+   470  007AD8  100D               	iorwf	(_velocidad+1)^0,w,c
+   471  007ADA  100E               	iorwf	(_velocidad+2)^0,w,c
+   472  007ADC  100F               	iorwf	(_velocidad+3)^0,w,c
+   473  007ADE  A4D8               	btfss	status,2,c
+   474  007AE0  EF74  F03D         	goto	u491
+   475  007AE4  EF76  F03D         	goto	u490
+   476  007AE8                     u491:
+   477  007AE8  EF7F  F03D         	goto	l998
+   478  007AEC                     u490:
+   479  007AEC  0E34               	movlw	52
+   480  007AEE  6E01               	movwf	??_secuencial_Efecto6^0,c
+   481  007AF0  0EF2               	movlw	242
+   482  007AF2                     u577:
+   483  007AF2  2EE8               	decfsz	wreg,f,c
+   484  007AF4  D7FE               	bra	u577
+   485  007AF6  2E01               	decfsz	??_secuencial_Efecto6^0,f,c
+   486  007AF8  D7FC               	bra	u577
+   487  007AFA  EF95  F03D         	goto	l1002
+   488  007AFE                     l998:
+   489  007AFE  0E04               	movlw	4
+   490  007B00  180C               	xorwf	_velocidad^0,w,c
+   491  007B02  100D               	iorwf	(_velocidad+1)^0,w,c
+   492  007B04  100E               	iorwf	(_velocidad+2)^0,w,c
+   493  007B06  100F               	iorwf	(_velocidad+3)^0,w,c
+   494  007B08  A4D8               	btfss	status,2,c
+   495  007B0A  EF89  F03D         	goto	u501
+   496  007B0E  EF8B  F03D         	goto	u500
+   497  007B12                     u501:
+   498  007B12  EF95  F03D         	goto	l124
+   499  007B16                     u500:
+   500  007B16  0E68               	movlw	104
+   501  007B18  6E01               	movwf	??_secuencial_Efecto6^0,c
+   502  007B1A  0EE4               	movlw	228
+   503  007B1C                     u587:
+   504  007B1C  2EE8               	decfsz	wreg,f,c
+   505  007B1E  D7FE               	bra	u587
+   506  007B20  2E01               	decfsz	??_secuencial_Efecto6^0,f,c
+   507  007B22  D7FC               	bra	u587
+   508  007B24  D000               	nop2	
+   509  007B26  EF95  F03D         	goto	l1002
+   510  007B2A                     l124:
+   511  007B2A                     l1002:
+   512                           
+   513                           ;secuencia_main.c: 152:         if (!PORTBbits.RB6) {
+   514  007B2A  BC81               	btfsc	129,6,c	;volatile
+   515  007B2C  EF9A  F03D         	goto	u511
+   516  007B30  EF9C  F03D         	goto	u510
+   517  007B34                     u511:
+   518  007B34  EFBD  F03D         	goto	l1010
+   519  007B38                     u510:
+   520  007B38                     
+   521                           ;secuencia_main.c: 153:             _delay((unsigned long)((50)*(800000/4000.0)));
+   522  007B38  0E0D               	movlw	13
+   523  007B3A  6E01               	movwf	??_secuencial_Efecto6^0,c
+   524  007B3C  0EFC               	movlw	252
+   525  007B3E                     u597:
+   526  007B3E  2EE8               	decfsz	wreg,f,c
+   527  007B40  D7FE               	bra	u597
+   528  007B42  2E01               	decfsz	??_secuencial_Efecto6^0,f,c
+   529  007B44  D7FC               	bra	u597
+   530  007B46                     
+   531                           ;secuencia_main.c: 154:             if(++velocidad==5){velocidad=1;}
+   532  007B46  0E01               	movlw	1
+   533  007B48  260C               	addwf	_velocidad^0,f,c
+   534  007B4A  0E00               	movlw	0
+   535  007B4C  220D               	addwfc	(_velocidad+1)^0,f,c
+   536  007B4E  220E               	addwfc	(_velocidad+2)^0,f,c
+   537  007B50  220F               	addwfc	(_velocidad+3)^0,f,c
+   538  007B52  0E05               	movlw	5
+   539  007B54  180C               	xorwf	_velocidad^0,w,c
+   540  007B56  100D               	iorwf	(_velocidad+1)^0,w,c
+   541  007B58  100E               	iorwf	(_velocidad+2)^0,w,c
+   542  007B5A  100F               	iorwf	(_velocidad+3)^0,w,c
+   543  007B5C  A4D8               	btfss	status,2,c
+   544  007B5E  EFB3  F03D         	goto	u521
+   545  007B62  EFB5  F03D         	goto	u520
+   546  007B66                     u521:
+   547  007B66  EFBD  F03D         	goto	l1010
+   548  007B6A                     u520:
+   549  007B6A  0E01               	movlw	1
+   550  007B6C  6E0C               	movwf	_velocidad^0,c
+   551  007B6E  0E00               	movlw	0
+   552  007B70  6E0D               	movwf	(_velocidad+1)^0,c
+   553  007B72  0E00               	movlw	0
+   554  007B74  6E0E               	movwf	(_velocidad+2)^0,c
+   555  007B76  0E00               	movlw	0
+   556  007B78  6E0F               	movwf	(_velocidad+3)^0,c
+   557  007B7A                     l1010:
+   558                           
+   559                           ;secuencia_main.c: 156:     }
+   560  007B7A  4A07               	infsnz	secuencial_Efecto6@i^0,f,c
+   561  007B7C  2A08               	incf	(secuencial_Efecto6@i+1)^0,f,c
+   562  007B7E  4A05               	infsnz	secuencial_Efecto6@j^0,f,c
+   563  007B80  2A06               	incf	(secuencial_Efecto6@j+1)^0,f,c
+   564  007B82  EF15  F03D         	goto	l982
+   565  007B86                     l130:
+   566  007B86  0012               	return		;funcret
+   567  007B88                     __end_of_secuencial_Efecto6:
+   568                           	callstack 0
+   569                           
+   570 ;; *************** function _secuencial_Efecto5 *****************
+   571 ;; Defined at:
+   572 ;;		line 129 in file "secuencia_main.c"
+   573 ;; Parameters:    Size  Location     Type
+   574 ;;		None
+   575 ;; Auto vars:     Size  Location     Type
+   576 ;;  i               2    6[COMRAM] int 
+   577 ;;  j               2    4[COMRAM] int 
+   578 ;; Return value:  Size  Location     Type
+   579 ;;                  1    wreg      void 
+   580 ;; Registers used:
+   581 ;;		wreg, status,2, status,0
+   582 ;; Tracked objects:
+   583 ;;		On entry : 0/0
+   584 ;;		On exit  : 0/0
+   585 ;;		Unchanged: 0/0
+   586 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   587 ;;      Params:         0       0       0       0       0       0       0       0       0
+   588 ;;      Locals:         4       0       0       0       0       0       0       0       0
+   589 ;;      Temps:          4       0       0       0       0       0       0       0       0
+   590 ;;      Totals:         8       0       0       0       0       0       0       0       0
+   591 ;;Total ram usage:        8 bytes
+   592 ;; Hardware stack levels used:    1
+   593 ;; This function calls:
+   594 ;;		Nothing
+   595 ;; This function is called by:
+   596 ;;		_main
+   597 ;; This function uses a non-reentrant model
+   598 ;;
+   599                           
+   600                           	psect	text2
+   601  007CF8                     __ptext2:
+   602                           	callstack 0
+   603  007CF8                     _secuencial_Efecto5:
+   604                           	callstack 30
+   605  007CF8                     
+   606                           ;secuencia_main.c: 130:     for (int i = 8, j = 7; i > 0; i--, j--) {
+   607  007CF8  0E00               	movlw	0
+   608  007CFA  6E08               	movwf	(secuencial_Efecto5@i+1)^0,c
+   609  007CFC  0E08               	movlw	8
+   610  007CFE  6E07               	movwf	secuencial_Efecto5@i^0,c
+   611  007D00  0E00               	movlw	0
+   612  007D02  6E06               	movwf	(secuencial_Efecto5@j+1)^0,c
+   613  007D04  0E07               	movlw	7
+   614  007D06  6E05               	movwf	secuencial_Efecto5@j^0,c
+   615  007D08                     l946:
+   616  007D08  BE08               	btfsc	(secuencial_Efecto5@i+1)^0,7,c
+   617  007D0A  EF91  F03E         	goto	u350
+   618  007D0E  5008               	movf	(secuencial_Efecto5@i+1)^0,w,c
+   619  007D10  E106               	bnz	u351
+   620  007D12  0407               	decf	secuencial_Efecto5@i^0,w,c
+   621  007D14  B0D8               	btfsc	status,0,c
+   622  007D16  EF8F  F03E         	goto	u351
+   623  007D1A  EF91  F03E         	goto	u350
+   624  007D1E                     u351:
+   625  007D1E  EF93  F03E         	goto	l950
+   626  007D22                     u350:
+   627  007D22  EF33  F03F         	goto	l116
+   628  007D26                     l950:
+   629                           
+   630                           ;secuencia_main.c: 131:         LATD = ((1 << i)) + ((1 << j));
+   631  007D26  C005  F001         	movff	secuencial_Efecto5@j,??_secuencial_Efecto5
+   632  007D2A  0E01               	movlw	1
+   633  007D2C  6E02               	movwf	(??_secuencial_Efecto5+1)^0,c
+   634  007D2E  2A01               	incf	??_secuencial_Efecto5^0,f,c
+   635  007D30  EF9C  F03E         	goto	u364
+   636  007D34                     u365:
+   637  007D34  90D8               	bcf	status,0,c
+   638  007D36  3602               	rlcf	(??_secuencial_Efecto5+1)^0,f,c
+   639  007D38                     u364:
+   640  007D38  2E01               	decfsz	??_secuencial_Efecto5^0,f,c
+   641  007D3A  EF9A  F03E         	goto	u365
+   642  007D3E  C007  F003         	movff	secuencial_Efecto5@i,??_secuencial_Efecto5+2
+   643  007D42  0E01               	movlw	1
+   644  007D44  6E04               	movwf	(??_secuencial_Efecto5+3)^0,c
+   645  007D46  2A03               	incf	(??_secuencial_Efecto5+2)^0,f,c
+   646  007D48  EFA8  F03E         	goto	u374
+   647  007D4C                     u375:
+   648  007D4C  90D8               	bcf	status,0,c
+   649  007D4E  3604               	rlcf	(??_secuencial_Efecto5+3)^0,f,c
+   650  007D50                     u374:
+   651  007D50  2E03               	decfsz	(??_secuencial_Efecto5+2)^0,f,c
+   652  007D52  EFA6  F03E         	goto	u375
+   653  007D56  5004               	movf	(??_secuencial_Efecto5+3)^0,w,c
+   654  007D58  2402               	addwf	(??_secuencial_Efecto5+1)^0,w,c
+   655  007D5A  6E8C               	movwf	140,c	;volatile
+   656                           
+   657                           ;secuencia_main.c: 132:         if(velocidad==1){_delay((unsigned long)((50)*(800000/400
+      +                          0.0)));}
+   658  007D5C  040C               	decf	_velocidad^0,w,c
+   659  007D5E  100D               	iorwf	(_velocidad+1)^0,w,c
+   660  007D60  100E               	iorwf	(_velocidad+2)^0,w,c
+   661  007D62  100F               	iorwf	(_velocidad+3)^0,w,c
+   662  007D64  A4D8               	btfss	status,2,c
+   663  007D66  EFB7  F03E         	goto	u381
+   664  007D6A  EFB9  F03E         	goto	u380
+   665  007D6E                     u381:
+   666  007D6E  EFC2  F03E         	goto	l954
+   667  007D72                     u380:
+   668  007D72  0E0D               	movlw	13
+   669  007D74  6E01               	movwf	??_secuencial_Efecto5^0,c
+   670  007D76  0EFC               	movlw	252
+   671  007D78                     u607:
+   672  007D78  2EE8               	decfsz	wreg,f,c
+   673  007D7A  D7FE               	bra	u607
+   674  007D7C  2E01               	decfsz	??_secuencial_Efecto5^0,f,c
+   675  007D7E  D7FC               	bra	u607
+   676  007D80  EF03  F03F         	goto	l966
+   677  007D84                     l954:
+   678  007D84  0E02               	movlw	2
+   679  007D86  180C               	xorwf	_velocidad^0,w,c
+   680  007D88  100D               	iorwf	(_velocidad+1)^0,w,c
+   681  007D8A  100E               	iorwf	(_velocidad+2)^0,w,c
+   682  007D8C  100F               	iorwf	(_velocidad+3)^0,w,c
+   683  007D8E  A4D8               	btfss	status,2,c
+   684  007D90  EFCC  F03E         	goto	u391
+   685  007D94  EFCE  F03E         	goto	u390
+   686  007D98                     u391:
+   687  007D98  EFD8  F03E         	goto	l958
+   688  007D9C                     u390:
+   689  007D9C  0E1A               	movlw	26
+   690  007D9E  6E01               	movwf	??_secuencial_Efecto5^0,c
+   691  007DA0  0EF8               	movlw	248
+   692  007DA2                     u617:
+   693  007DA2  2EE8               	decfsz	wreg,f,c
+   694  007DA4  D7FE               	bra	u617
+   695  007DA6  2E01               	decfsz	??_secuencial_Efecto5^0,f,c
+   696  007DA8  D7FC               	bra	u617
+   697  007DAA  D000               	nop2	
+   698  007DAC  EF03  F03F         	goto	l966
+   699  007DB0                     l958:
+   700  007DB0  0E03               	movlw	3
+   701  007DB2  180C               	xorwf	_velocidad^0,w,c
+   702  007DB4  100D               	iorwf	(_velocidad+1)^0,w,c
+   703  007DB6  100E               	iorwf	(_velocidad+2)^0,w,c
+   704  007DB8  100F               	iorwf	(_velocidad+3)^0,w,c
+   705  007DBA  A4D8               	btfss	status,2,c
+   706  007DBC  EFE2  F03E         	goto	u401
+   707  007DC0  EFE4  F03E         	goto	u400
+   708  007DC4                     u401:
+   709  007DC4  EFED  F03E         	goto	l962
+   710  007DC8                     u400:
+   711  007DC8  0E34               	movlw	52
+   712  007DCA  6E01               	movwf	??_secuencial_Efecto5^0,c
+   713  007DCC  0EF2               	movlw	242
+   714  007DCE                     u627:
+   715  007DCE  2EE8               	decfsz	wreg,f,c
+   716  007DD0  D7FE               	bra	u627
+   717  007DD2  2E01               	decfsz	??_secuencial_Efecto5^0,f,c
+   718  007DD4  D7FC               	bra	u627
+   719  007DD6  EF03  F03F         	goto	l966
+   720  007DDA                     l962:
+   721  007DDA  0E04               	movlw	4
+   722  007DDC  180C               	xorwf	_velocidad^0,w,c
+   723  007DDE  100D               	iorwf	(_velocidad+1)^0,w,c
+   724  007DE0  100E               	iorwf	(_velocidad+2)^0,w,c
+   725  007DE2  100F               	iorwf	(_velocidad+3)^0,w,c
+   726  007DE4  A4D8               	btfss	status,2,c
+   727  007DE6  EFF7  F03E         	goto	u411
+   728  007DEA  EFF9  F03E         	goto	u410
+   729  007DEE                     u411:
+   730  007DEE  EF03  F03F         	goto	l110
+   731  007DF2                     u410:
+   732  007DF2  0E68               	movlw	104
+   733  007DF4  6E01               	movwf	??_secuencial_Efecto5^0,c
+   734  007DF6  0EE4               	movlw	228
+   735  007DF8                     u637:
+   736  007DF8  2EE8               	decfsz	wreg,f,c
+   737  007DFA  D7FE               	bra	u637
+   738  007DFC  2E01               	decfsz	??_secuencial_Efecto5^0,f,c
+   739  007DFE  D7FC               	bra	u637
+   740  007E00  D000               	nop2	
+   741  007E02  EF03  F03F         	goto	l966
+   742  007E06                     l110:
+   743  007E06                     l966:
+   744                           
+   745                           ;secuencia_main.c: 137:         if (!PORTBbits.RB6) {
+   746  007E06  BC81               	btfsc	129,6,c	;volatile
+   747  007E08  EF08  F03F         	goto	u421
+   748  007E0C  EF0A  F03F         	goto	u420
+   749  007E10                     u421:
+   750  007E10  EF2B  F03F         	goto	l974
+   751  007E14                     u420:
+   752  007E14                     
+   753                           ;secuencia_main.c: 138:             _delay((unsigned long)((50)*(800000/4000.0)));
+   754  007E14  0E0D               	movlw	13
+   755  007E16  6E01               	movwf	??_secuencial_Efecto5^0,c
+   756  007E18  0EFC               	movlw	252
+   757  007E1A                     u647:
+   758  007E1A  2EE8               	decfsz	wreg,f,c
+   759  007E1C  D7FE               	bra	u647
+   760  007E1E  2E01               	decfsz	??_secuencial_Efecto5^0,f,c
+   761  007E20  D7FC               	bra	u647
+   762  007E22                     
+   763                           ;secuencia_main.c: 139:             if(++velocidad==5){velocidad=1;}
+   764  007E22  0E01               	movlw	1
+   765  007E24  260C               	addwf	_velocidad^0,f,c
+   766  007E26  0E00               	movlw	0
+   767  007E28  220D               	addwfc	(_velocidad+1)^0,f,c
+   768  007E2A  220E               	addwfc	(_velocidad+2)^0,f,c
+   769  007E2C  220F               	addwfc	(_velocidad+3)^0,f,c
+   770  007E2E  0E05               	movlw	5
+   771  007E30  180C               	xorwf	_velocidad^0,w,c
+   772  007E32  100D               	iorwf	(_velocidad+1)^0,w,c
+   773  007E34  100E               	iorwf	(_velocidad+2)^0,w,c
+   774  007E36  100F               	iorwf	(_velocidad+3)^0,w,c
+   775  007E38  A4D8               	btfss	status,2,c
+   776  007E3A  EF21  F03F         	goto	u431
+   777  007E3E  EF23  F03F         	goto	u430
+   778  007E42                     u431:
+   779  007E42  EF2B  F03F         	goto	l974
+   780  007E46                     u430:
+   781  007E46  0E01               	movlw	1
+   782  007E48  6E0C               	movwf	_velocidad^0,c
+   783  007E4A  0E00               	movlw	0
+   784  007E4C  6E0D               	movwf	(_velocidad+1)^0,c
+   785  007E4E  0E00               	movlw	0
+   786  007E50  6E0E               	movwf	(_velocidad+2)^0,c
+   787  007E52  0E00               	movlw	0
+   788  007E54  6E0F               	movwf	(_velocidad+3)^0,c
+   789  007E56                     l974:
+   790                           
+   791                           ;secuencia_main.c: 141:     }
+   792  007E56  0607               	decf	secuencial_Efecto5@i^0,f,c
+   793  007E58  A0D8               	btfss	status,0,c
+   794  007E5A  0608               	decf	(secuencial_Efecto5@i+1)^0,f,c
+   795  007E5C  0605               	decf	secuencial_Efecto5@j^0,f,c
+   796  007E5E  A0D8               	btfss	status,0,c
+   797  007E60  0606               	decf	(secuencial_Efecto5@j+1)^0,f,c
+   798  007E62  EF84  F03E         	goto	l946
+   799  007E66                     l116:
+   800  007E66  0012               	return		;funcret
+   801  007E68                     __end_of_secuencial_Efecto5:
+   802                           	callstack 0
+   803                           
+   804 ;; *************** function _secuencial_Efecto4 *****************
+   805 ;; Defined at:
+   806 ;;		line 111 in file "secuencia_main.c"
+   807 ;; Parameters:    Size  Location     Type
+   808 ;;		None
+   809 ;; Auto vars:     Size  Location     Type
+   810 ;;  i               2    3[COMRAM] int 
+   811 ;;  n               2    7[COMRAM] volatile unsigned int 
+   812 ;;  m               2    5[COMRAM] volatile unsigned int 
+   813 ;; Return value:  Size  Location     Type
+   814 ;;                  1    wreg      void 
+   815 ;; Registers used:
+   816 ;;		wreg, status,2, status,0
+   817 ;; Tracked objects:
+   818 ;;		On entry : 0/0
+   819 ;;		On exit  : 0/0
+   820 ;;		Unchanged: 0/0
+   821 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   822 ;;      Params:         0       0       0       0       0       0       0       0       0
+   823 ;;      Locals:         6       0       0       0       0       0       0       0       0
+   824 ;;      Temps:          3       0       0       0       0       0       0       0       0
+   825 ;;      Totals:         9       0       0       0       0       0       0       0       0
+   826 ;;Total ram usage:        9 bytes
+   827 ;; Hardware stack levels used:    1
+   828 ;; This function calls:
+   829 ;;		Nothing
+   830 ;; This function is called by:
+   831 ;;		_main
+   832 ;; This function uses a non-reentrant model
+   833 ;;
+   834                           
+   835                           	psect	text3
+   836  007E68                     __ptext3:
+   837                           	callstack 0
+   838  007E68                     _secuencial_Efecto4:
+   839                           	callstack 30
+   840  007E68                     
+   841                           ;secuencia_main.c: 112:     volatile unsigned int m=0,n=0;
+   842  007E68  0E00               	movlw	0
+   843  007E6A  6E07               	movwf	(secuencial_Efecto4@m+1)^0,c	;volatile
+   844  007E6C  0E00               	movlw	0
+   845  007E6E  6E06               	movwf	secuencial_Efecto4@m^0,c	;volatile
+   846  007E70  0E00               	movlw	0
+   847  007E72  6E09               	movwf	(secuencial_Efecto4@n+1)^0,c	;volatile
+   848  007E74  0E00               	movlw	0
+   849  007E76  6E08               	movwf	secuencial_Efecto4@n^0,c	;volatile
+   850                           
+   851                           ;secuencia_main.c: 113:     for (int i = 0; i < 5; i++) {
+   852  007E78  0E00               	movlw	0
+   853  007E7A  6E05               	movwf	(secuencial_Efecto4@i+1)^0,c
+   854  007E7C  0E00               	movlw	0
+   855  007E7E  6E04               	movwf	secuencial_Efecto4@i^0,c
+   856  007E80                     l916:
+   857                           
+   858                           ;secuencia_main.c: 114:         LATD = m+n;
+   859  007E80  5006               	movf	secuencial_Efecto4@m^0,w,c	;volatile
+   860  007E82  2408               	addwf	secuencial_Efecto4@n^0,w,c	;volatile
+   861  007E84  6E8C               	movwf	140,c	;volatile
+   862                           
+   863                           ;secuencia_main.c: 115:         m += (1 << i) & 0x0f;
+   864  007E86  C004  F001         	movff	secuencial_Efecto4@i,??_secuencial_Efecto4
+   865  007E8A  0E01               	movlw	1
+   866  007E8C  6E02               	movwf	(??_secuencial_Efecto4+1)^0,c
+   867  007E8E  0E00               	movlw	0
+   868  007E90  6E03               	movwf	(??_secuencial_Efecto4+2)^0,c
+   869  007E92  2A01               	incf	??_secuencial_Efecto4^0,f,c
+   870  007E94  EF4F  F03F         	goto	u264
+   871  007E98                     u265:
+   872  007E98  90D8               	bcf	status,0,c
+   873  007E9A  3602               	rlcf	(??_secuencial_Efecto4+1)^0,f,c
+   874  007E9C  3603               	rlcf	(??_secuencial_Efecto4+2)^0,f,c
+   875  007E9E                     u264:
+   876  007E9E  2E01               	decfsz	??_secuencial_Efecto4^0,f,c
+   877  007EA0  EF4C  F03F         	goto	u265
+   878  007EA4  0E0F               	movlw	15
+   879  007EA6  1602               	andwf	(??_secuencial_Efecto4+1)^0,f,c
+   880  007EA8  0E00               	movlw	0
+   881  007EAA  1603               	andwf	(??_secuencial_Efecto4+2)^0,f,c
+   882  007EAC  5002               	movf	(??_secuencial_Efecto4+1)^0,w,c
+   883  007EAE  2606               	addwf	secuencial_Efecto4@m^0,f,c	;volatile
+   884  007EB0  5003               	movf	(??_secuencial_Efecto4+2)^0,w,c
+   885  007EB2  2207               	addwfc	(secuencial_Efecto4@m+1)^0,f,c	;volatile
+   886                           
+   887                           ;secuencia_main.c: 116:         n += (1 << (7-i)) & 0xf0;
+   888  007EB4  5004               	movf	secuencial_Efecto4@i^0,w,c
+   889  007EB6  0807               	sublw	7
+   890  007EB8  6E01               	movwf	??_secuencial_Efecto4^0,c
+   891  007EBA  0E01               	movlw	1
+   892  007EBC  6E02               	movwf	(??_secuencial_Efecto4+1)^0,c
+   893  007EBE  0E00               	movlw	0
+   894  007EC0  6E03               	movwf	(??_secuencial_Efecto4+2)^0,c
+   895  007EC2  2A01               	incf	??_secuencial_Efecto4^0,f,c
+   896  007EC4  EF67  F03F         	goto	u274
+   897  007EC8                     u275:
+   898  007EC8  90D8               	bcf	status,0,c
+   899  007ECA  3602               	rlcf	(??_secuencial_Efecto4+1)^0,f,c
+   900  007ECC  3603               	rlcf	(??_secuencial_Efecto4+2)^0,f,c
+   901  007ECE                     u274:
+   902  007ECE  2E01               	decfsz	??_secuencial_Efecto4^0,f,c
+   903  007ED0  EF64  F03F         	goto	u275
+   904  007ED4  0EF0               	movlw	240
+   905  007ED6  1602               	andwf	(??_secuencial_Efecto4+1)^0,f,c
+   906  007ED8  0E00               	movlw	0
+   907  007EDA  1603               	andwf	(??_secuencial_Efecto4+2)^0,f,c
+   908  007EDC  5002               	movf	(??_secuencial_Efecto4+1)^0,w,c
+   909  007EDE  2608               	addwf	secuencial_Efecto4@n^0,f,c	;volatile
+   910  007EE0  5003               	movf	(??_secuencial_Efecto4+2)^0,w,c
+   911  007EE2  2209               	addwfc	(secuencial_Efecto4@n+1)^0,f,c	;volatile
+   912                           
+   913                           ;secuencia_main.c: 117:         if(velocidad==1){_delay((unsigned long)((50)*(800000/400
+      +                          0.0)));}
+   914  007EE4  040C               	decf	_velocidad^0,w,c
+   915  007EE6  100D               	iorwf	(_velocidad+1)^0,w,c
+   916  007EE8  100E               	iorwf	(_velocidad+2)^0,w,c
+   917  007EEA  100F               	iorwf	(_velocidad+3)^0,w,c
+   918  007EEC  A4D8               	btfss	status,2,c
+   919  007EEE  EF7B  F03F         	goto	u281
+   920  007EF2  EF7D  F03F         	goto	u280
+   921  007EF6                     u281:
+   922  007EF6  EF86  F03F         	goto	l920
+   923  007EFA                     u280:
+   924  007EFA  0E0D               	movlw	13
+   925  007EFC  6E01               	movwf	??_secuencial_Efecto4^0,c
+   926  007EFE  0EFC               	movlw	252
+   927  007F00                     u657:
+   928  007F00  2EE8               	decfsz	wreg,f,c
+   929  007F02  D7FE               	bra	u657
+   930  007F04  2E01               	decfsz	??_secuencial_Efecto4^0,f,c
+   931  007F06  D7FC               	bra	u657
+   932  007F08  EFC7  F03F         	goto	l932
+   933  007F0C                     l920:
+   934  007F0C  0E02               	movlw	2
+   935  007F0E  180C               	xorwf	_velocidad^0,w,c
+   936  007F10  100D               	iorwf	(_velocidad+1)^0,w,c
+   937  007F12  100E               	iorwf	(_velocidad+2)^0,w,c
+   938  007F14  100F               	iorwf	(_velocidad+3)^0,w,c
+   939  007F16  A4D8               	btfss	status,2,c
+   940  007F18  EF90  F03F         	goto	u291
+   941  007F1C  EF92  F03F         	goto	u290
+   942  007F20                     u291:
+   943  007F20  EF9C  F03F         	goto	l924
+   944  007F24                     u290:
+   945  007F24  0E1A               	movlw	26
+   946  007F26  6E01               	movwf	??_secuencial_Efecto4^0,c
+   947  007F28  0EF8               	movlw	248
+   948  007F2A                     u667:
+   949  007F2A  2EE8               	decfsz	wreg,f,c
+   950  007F2C  D7FE               	bra	u667
+   951  007F2E  2E01               	decfsz	??_secuencial_Efecto4^0,f,c
+   952  007F30  D7FC               	bra	u667
+   953  007F32  D000               	nop2	
+   954  007F34  EFC7  F03F         	goto	l932
+   955  007F38                     l924:
+   956  007F38  0E03               	movlw	3
+   957  007F3A  180C               	xorwf	_velocidad^0,w,c
+   958  007F3C  100D               	iorwf	(_velocidad+1)^0,w,c
+   959  007F3E  100E               	iorwf	(_velocidad+2)^0,w,c
+   960  007F40  100F               	iorwf	(_velocidad+3)^0,w,c
+   961  007F42  A4D8               	btfss	status,2,c
+   962  007F44  EFA6  F03F         	goto	u301
+   963  007F48  EFA8  F03F         	goto	u300
+   964  007F4C                     u301:
+   965  007F4C  EFB1  F03F         	goto	l928
+   966  007F50                     u300:
+   967  007F50  0E34               	movlw	52
+   968  007F52  6E01               	movwf	??_secuencial_Efecto4^0,c
+   969  007F54  0EF2               	movlw	242
+   970  007F56                     u677:
+   971  007F56  2EE8               	decfsz	wreg,f,c
+   972  007F58  D7FE               	bra	u677
+   973  007F5A  2E01               	decfsz	??_secuencial_Efecto4^0,f,c
+   974  007F5C  D7FC               	bra	u677
+   975  007F5E  EFC7  F03F         	goto	l932
+   976  007F62                     l928:
+   977  007F62  0E04               	movlw	4
+   978  007F64  180C               	xorwf	_velocidad^0,w,c
+   979  007F66  100D               	iorwf	(_velocidad+1)^0,w,c
+   980  007F68  100E               	iorwf	(_velocidad+2)^0,w,c
+   981  007F6A  100F               	iorwf	(_velocidad+3)^0,w,c
+   982  007F6C  A4D8               	btfss	status,2,c
+   983  007F6E  EFBB  F03F         	goto	u311
+   984  007F72  EFBD  F03F         	goto	u310
+   985  007F76                     u311:
+   986  007F76  EFC7  F03F         	goto	l96
+   987  007F7A                     u310:
+   988  007F7A  0E68               	movlw	104
+   989  007F7C  6E01               	movwf	??_secuencial_Efecto4^0,c
+   990  007F7E  0EE4               	movlw	228
+   991  007F80                     u687:
+   992  007F80  2EE8               	decfsz	wreg,f,c
+   993  007F82  D7FE               	bra	u687
+   994  007F84  2E01               	decfsz	??_secuencial_Efecto4^0,f,c
+   995  007F86  D7FC               	bra	u687
+   996  007F88  D000               	nop2	
+   997  007F8A  EFC7  F03F         	goto	l932
+   998  007F8E                     l96:
+   999  007F8E                     l932:
+  1000                           
+  1001                           ;secuencia_main.c: 122:         if (!PORTBbits.RB6) {
+  1002  007F8E  BC81               	btfsc	129,6,c	;volatile
+  1003  007F90  EFCC  F03F         	goto	u321
+  1004  007F94  EFCE  F03F         	goto	u320
+  1005  007F98                     u321:
+  1006  007F98  EFEF  F03F         	goto	l940
+  1007  007F9C                     u320:
+  1008  007F9C                     
+  1009                           ;secuencia_main.c: 123:             _delay((unsigned long)((50)*(800000/4000.0)));
+  1010  007F9C  0E0D               	movlw	13
+  1011  007F9E  6E01               	movwf	??_secuencial_Efecto4^0,c
+  1012  007FA0  0EFC               	movlw	252
+  1013  007FA2                     u697:
+  1014  007FA2  2EE8               	decfsz	wreg,f,c
+  1015  007FA4  D7FE               	bra	u697
+  1016  007FA6  2E01               	decfsz	??_secuencial_Efecto4^0,f,c
+  1017  007FA8  D7FC               	bra	u697
+  1018  007FAA                     
+  1019                           ;secuencia_main.c: 124:             if(++velocidad==5){velocidad=1;}
+  1020  007FAA  0E01               	movlw	1
+  1021  007FAC  260C               	addwf	_velocidad^0,f,c
+  1022  007FAE  0E00               	movlw	0
+  1023  007FB0  220D               	addwfc	(_velocidad+1)^0,f,c
+  1024  007FB2  220E               	addwfc	(_velocidad+2)^0,f,c
+  1025  007FB4  220F               	addwfc	(_velocidad+3)^0,f,c
+  1026  007FB6  0E05               	movlw	5
+  1027  007FB8  180C               	xorwf	_velocidad^0,w,c
+  1028  007FBA  100D               	iorwf	(_velocidad+1)^0,w,c
+  1029  007FBC  100E               	iorwf	(_velocidad+2)^0,w,c
+  1030  007FBE  100F               	iorwf	(_velocidad+3)^0,w,c
+  1031  007FC0  A4D8               	btfss	status,2,c
+  1032  007FC2  EFE5  F03F         	goto	u331
+  1033  007FC6  EFE7  F03F         	goto	u330
+  1034  007FCA                     u331:
+  1035  007FCA  EFEF  F03F         	goto	l940
+  1036  007FCE                     u330:
+  1037  007FCE  0E01               	movlw	1
+  1038  007FD0  6E0C               	movwf	_velocidad^0,c
+  1039  007FD2  0E00               	movlw	0
+  1040  007FD4  6E0D               	movwf	(_velocidad+1)^0,c
+  1041  007FD6  0E00               	movlw	0
+  1042  007FD8  6E0E               	movwf	(_velocidad+2)^0,c
+  1043  007FDA  0E00               	movlw	0
+  1044  007FDC  6E0F               	movwf	(_velocidad+3)^0,c
+  1045  007FDE                     l940:
+  1046                           
+  1047                           ;secuencia_main.c: 126:     }
+  1048  007FDE  4A04               	infsnz	secuencial_Efecto4@i^0,f,c
+  1049  007FE0  2A05               	incf	(secuencial_Efecto4@i+1)^0,f,c
+  1050  007FE2  BE05               	btfsc	(secuencial_Efecto4@i+1)^0,7,c
+  1051  007FE4  EFFD  F03F         	goto	u341
+  1052  007FE8  5005               	movf	(secuencial_Efecto4@i+1)^0,w,c
+  1053  007FEA  E109               	bnz	u340
+  1054  007FEC  0E05               	movlw	5
+  1055  007FEE  5C04               	subwf	secuencial_Efecto4@i^0,w,c
+  1056  007FF0  A0D8               	btfss	status,0,c
+  1057  007FF2  EFFD  F03F         	goto	u341
+  1058  007FF6  EFFF  F03F         	goto	u340
+  1059  007FFA                     u341:
+  1060  007FFA  EF40  F03F         	goto	l916
+  1061  007FFE                     u340:
+  1062  007FFE  0012               	return		;funcret
+  1063  008000                     __end_of_secuencial_Efecto4:
+  1064                           	callstack 0
+  1065                           
+  1066 ;; *************** function _secuencial_Efecto3 *****************
+  1067 ;; Defined at:
+  1068 ;;		line 96 in file "secuencia_main.c"
+  1069 ;; Parameters:    Size  Location     Type
+  1070 ;;		None
+  1071 ;; Auto vars:     Size  Location     Type
+  1072 ;;  i               2    2[COMRAM] int 
+  1073 ;; Return value:  Size  Location     Type
+  1074 ;;                  1    wreg      void 
+  1075 ;; Registers used:
+  1076 ;;		wreg, status,2, status,0
+  1077 ;; Tracked objects:
+  1078 ;;		On entry : 0/0
+  1079 ;;		On exit  : 0/0
+  1080 ;;		Unchanged: 0/0
+  1081 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+  1082 ;;      Params:         0       0       0       0       0       0       0       0       0
+  1083 ;;      Locals:         2       0       0       0       0       0       0       0       0
+  1084 ;;      Temps:          2       0       0       0       0       0       0       0       0
+  1085 ;;      Totals:         4       0       0       0       0       0       0       0       0
+  1086 ;;Total ram usage:        4 bytes
+  1087 ;; Hardware stack levels used:    1
+  1088 ;; This function calls:
+  1089 ;;		Nothing
+  1090 ;; This function is called by:
+  1091 ;;		_main
+  1092 ;; This function uses a non-reentrant model
+  1093 ;;
+  1094                           
+  1095                           	psect	text4
+  1096  0078D2                     __ptext4:
+  1097                           	callstack 0
+  1098  0078D2                     _secuencial_Efecto3:
+  1099                           	callstack 30
+  1100  0078D2                     
+  1101                           ;secuencia_main.c: 97:     for (int i = 0; i < 9; i++) {
+  1102  0078D2  0E00               	movlw	0
+  1103  0078D4  6E04               	movwf	(secuencial_Efecto3@i+1)^0,c
+  1104  0078D6  0E00               	movlw	0
+  1105  0078D8  6E03               	movwf	secuencial_Efecto3@i^0,c
+  1106  0078DA                     l878:
+  1107  0078DA  BE04               	btfsc	(secuencial_Efecto3@i+1)^0,7,c
+  1108  0078DC  EF79  F03C         	goto	u181
+  1109  0078E0  5004               	movf	(secuencial_Efecto3@i+1)^0,w,c
+  1110  0078E2  E109               	bnz	u180
+  1111  0078E4  0E09               	movlw	9
+  1112  0078E6  5C03               	subwf	secuencial_Efecto3@i^0,w,c
+  1113  0078E8  A0D8               	btfss	status,0,c
+  1114  0078EA  EF79  F03C         	goto	u181
+  1115  0078EE  EF7B  F03C         	goto	u180
+  1116  0078F2                     u181:
+  1117  0078F2  EF7D  F03C         	goto	l882
+  1118  0078F6                     u180:
+  1119  0078F6  EF0C  F03D         	goto	l88
+  1120  0078FA                     l882:
+  1121                           
+  1122                           ;secuencia_main.c: 98:         LATD = (1 << i) - 1;
+  1123  0078FA  C003  F001         	movff	secuencial_Efecto3@i,??_secuencial_Efecto3
+  1124  0078FE  0E01               	movlw	1
+  1125  007900  6E02               	movwf	(??_secuencial_Efecto3+1)^0,c
+  1126  007902  2A01               	incf	??_secuencial_Efecto3^0,f,c
+  1127  007904  EF86  F03C         	goto	u194
+  1128  007908                     u195:
+  1129  007908  90D8               	bcf	status,0,c
+  1130  00790A  3602               	rlcf	(??_secuencial_Efecto3+1)^0,f,c
+  1131  00790C                     u194:
+  1132  00790C  2E01               	decfsz	??_secuencial_Efecto3^0,f,c
+  1133  00790E  EF84  F03C         	goto	u195
+  1134  007912  0402               	decf	(??_secuencial_Efecto3+1)^0,w,c
+  1135  007914  6E8C               	movwf	140,c	;volatile
+  1136                           
+  1137                           ;secuencia_main.c: 99:         if(velocidad==1){_delay((unsigned long)((50)*(800000/4000
+      +                          .0)));}
+  1138  007916  040C               	decf	_velocidad^0,w,c
+  1139  007918  100D               	iorwf	(_velocidad+1)^0,w,c
+  1140  00791A  100E               	iorwf	(_velocidad+2)^0,w,c
+  1141  00791C  100F               	iorwf	(_velocidad+3)^0,w,c
+  1142  00791E  A4D8               	btfss	status,2,c
+  1143  007920  EF94  F03C         	goto	u201
+  1144  007924  EF96  F03C         	goto	u200
+  1145  007928                     u201:
+  1146  007928  EF9F  F03C         	goto	l886
+  1147  00792C                     u200:
+  1148  00792C  0E0D               	movlw	13
+  1149  00792E  6E01               	movwf	??_secuencial_Efecto3^0,c
+  1150  007930  0EFC               	movlw	252
+  1151  007932                     u707:
+  1152  007932  2EE8               	decfsz	wreg,f,c
+  1153  007934  D7FE               	bra	u707
+  1154  007936  2E01               	decfsz	??_secuencial_Efecto3^0,f,c
+  1155  007938  D7FC               	bra	u707
+  1156  00793A  EFE0  F03C         	goto	l898
+  1157  00793E                     l886:
+  1158  00793E  0E02               	movlw	2
+  1159  007940  180C               	xorwf	_velocidad^0,w,c
+  1160  007942  100D               	iorwf	(_velocidad+1)^0,w,c
+  1161  007944  100E               	iorwf	(_velocidad+2)^0,w,c
+  1162  007946  100F               	iorwf	(_velocidad+3)^0,w,c
+  1163  007948  A4D8               	btfss	status,2,c
+  1164  00794A  EFA9  F03C         	goto	u211
+  1165  00794E  EFAB  F03C         	goto	u210
+  1166  007952                     u211:
+  1167  007952  EFB5  F03C         	goto	l890
+  1168  007956                     u210:
+  1169  007956  0E1A               	movlw	26
+  1170  007958  6E01               	movwf	??_secuencial_Efecto3^0,c
+  1171  00795A  0EF8               	movlw	248
+  1172  00795C                     u717:
+  1173  00795C  2EE8               	decfsz	wreg,f,c
+  1174  00795E  D7FE               	bra	u717
+  1175  007960  2E01               	decfsz	??_secuencial_Efecto3^0,f,c
+  1176  007962  D7FC               	bra	u717
+  1177  007964  D000               	nop2	
+  1178  007966  EFE0  F03C         	goto	l898
+  1179  00796A                     l890:
+  1180  00796A  0E03               	movlw	3
+  1181  00796C  180C               	xorwf	_velocidad^0,w,c
+  1182  00796E  100D               	iorwf	(_velocidad+1)^0,w,c
+  1183  007970  100E               	iorwf	(_velocidad+2)^0,w,c
+  1184  007972  100F               	iorwf	(_velocidad+3)^0,w,c
+  1185  007974  A4D8               	btfss	status,2,c
+  1186  007976  EFBF  F03C         	goto	u221
+  1187  00797A  EFC1  F03C         	goto	u220
+  1188  00797E                     u221:
+  1189  00797E  EFCA  F03C         	goto	l894
+  1190  007982                     u220:
+  1191  007982  0E34               	movlw	52
+  1192  007984  6E01               	movwf	??_secuencial_Efecto3^0,c
+  1193  007986  0EF2               	movlw	242
+  1194  007988                     u727:
+  1195  007988  2EE8               	decfsz	wreg,f,c
+  1196  00798A  D7FE               	bra	u727
+  1197  00798C  2E01               	decfsz	??_secuencial_Efecto3^0,f,c
+  1198  00798E  D7FC               	bra	u727
+  1199  007990  EFE0  F03C         	goto	l898
+  1200  007994                     l894:
+  1201  007994  0E04               	movlw	4
+  1202  007996  180C               	xorwf	_velocidad^0,w,c
+  1203  007998  100D               	iorwf	(_velocidad+1)^0,w,c
+  1204  00799A  100E               	iorwf	(_velocidad+2)^0,w,c
+  1205  00799C  100F               	iorwf	(_velocidad+3)^0,w,c
+  1206  00799E  A4D8               	btfss	status,2,c
+  1207  0079A0  EFD4  F03C         	goto	u231
+  1208  0079A4  EFD6  F03C         	goto	u230
+  1209  0079A8                     u231:
+  1210  0079A8  EFE0  F03C         	goto	l82
+  1211  0079AC                     u230:
+  1212  0079AC  0E68               	movlw	104
+  1213  0079AE  6E01               	movwf	??_secuencial_Efecto3^0,c
+  1214  0079B0  0EE4               	movlw	228
+  1215  0079B2                     u737:
+  1216  0079B2  2EE8               	decfsz	wreg,f,c
+  1217  0079B4  D7FE               	bra	u737
+  1218  0079B6  2E01               	decfsz	??_secuencial_Efecto3^0,f,c
+  1219  0079B8  D7FC               	bra	u737
+  1220  0079BA  D000               	nop2	
+  1221  0079BC  EFE0  F03C         	goto	l898
+  1222  0079C0                     l82:
+  1223  0079C0                     l898:
+  1224                           
+  1225                           ;secuencia_main.c: 104:         if (!PORTBbits.RB6) {
+  1226  0079C0  BC81               	btfsc	129,6,c	;volatile
+  1227  0079C2  EFE5  F03C         	goto	u241
+  1228  0079C6  EFE7  F03C         	goto	u240
+  1229  0079CA                     u241:
+  1230  0079CA  EF08  F03D         	goto	l906
+  1231  0079CE                     u240:
+  1232  0079CE                     
+  1233                           ;secuencia_main.c: 105:             _delay((unsigned long)((50)*(800000/4000.0)));
+  1234  0079CE  0E0D               	movlw	13
+  1235  0079D0  6E01               	movwf	??_secuencial_Efecto3^0,c
+  1236  0079D2  0EFC               	movlw	252
+  1237  0079D4                     u747:
+  1238  0079D4  2EE8               	decfsz	wreg,f,c
+  1239  0079D6  D7FE               	bra	u747
+  1240  0079D8  2E01               	decfsz	??_secuencial_Efecto3^0,f,c
+  1241  0079DA  D7FC               	bra	u747
+  1242  0079DC                     
+  1243                           ;secuencia_main.c: 106:             if(++velocidad==5){velocidad=1;}
+  1244  0079DC  0E01               	movlw	1
+  1245  0079DE  260C               	addwf	_velocidad^0,f,c
+  1246  0079E0  0E00               	movlw	0
+  1247  0079E2  220D               	addwfc	(_velocidad+1)^0,f,c
+  1248  0079E4  220E               	addwfc	(_velocidad+2)^0,f,c
+  1249  0079E6  220F               	addwfc	(_velocidad+3)^0,f,c
+  1250  0079E8  0E05               	movlw	5
+  1251  0079EA  180C               	xorwf	_velocidad^0,w,c
+  1252  0079EC  100D               	iorwf	(_velocidad+1)^0,w,c
+  1253  0079EE  100E               	iorwf	(_velocidad+2)^0,w,c
+  1254  0079F0  100F               	iorwf	(_velocidad+3)^0,w,c
+  1255  0079F2  A4D8               	btfss	status,2,c
+  1256  0079F4  EFFE  F03C         	goto	u251
+  1257  0079F8  EF00  F03D         	goto	u250
+  1258  0079FC                     u251:
+  1259  0079FC  EF08  F03D         	goto	l906
+  1260  007A00                     u250:
+  1261  007A00  0E01               	movlw	1
+  1262  007A02  6E0C               	movwf	_velocidad^0,c
+  1263  007A04  0E00               	movlw	0
+  1264  007A06  6E0D               	movwf	(_velocidad+1)^0,c
+  1265  007A08  0E00               	movlw	0
+  1266  007A0A  6E0E               	movwf	(_velocidad+2)^0,c
+  1267  007A0C  0E00               	movlw	0
+  1268  007A0E  6E0F               	movwf	(_velocidad+3)^0,c
+  1269  007A10                     l906:
+  1270                           
+  1271                           ;secuencia_main.c: 108:     }
+  1272  007A10  4A03               	infsnz	secuencial_Efecto3@i^0,f,c
+  1273  007A12  2A04               	incf	(secuencial_Efecto3@i+1)^0,f,c
+  1274  007A14  EF6D  F03C         	goto	l878
+  1275  007A18                     l88:
+  1276  007A18  0012               	return		;funcret
+  1277  007A1A                     __end_of_secuencial_Efecto3:
+  1278                           	callstack 0
+  1279                           
+  1280 ;; *************** function _secuencial_Efecto2 *****************
+  1281 ;; Defined at:
+  1282 ;;		line 81 in file "secuencia_main.c"
+  1283 ;; Parameters:    Size  Location     Type
+  1284 ;;		None
+  1285 ;; Auto vars:     Size  Location     Type
+  1286 ;;  i               2    6[COMRAM] int 
+  1287 ;;  j               2    4[COMRAM] int 
+  1288 ;; Return value:  Size  Location     Type
+  1289 ;;                  1    wreg      void 
+  1290 ;; Registers used:
+  1291 ;;		wreg, status,2, status,0
+  1292 ;; Tracked objects:
+  1293 ;;		On entry : 0/0
+  1294 ;;		On exit  : 0/0
+  1295 ;;		Unchanged: 0/0
+  1296 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+  1297 ;;      Params:         0       0       0       0       0       0       0       0       0
+  1298 ;;      Locals:         4       0       0       0       0       0       0       0       0
+  1299 ;;      Temps:          4       0       0       0       0       0       0       0       0
+  1300 ;;      Totals:         8       0       0       0       0       0       0       0       0
+  1301 ;;Total ram usage:        8 bytes
+  1302 ;; Hardware stack levels used:    1
+  1303 ;; This function calls:
+  1304 ;;		Nothing
+  1305 ;; This function is called by:
+  1306 ;;		_main
+  1307 ;; This function uses a non-reentrant model
+  1308 ;;
+  1309                           
+  1310                           	psect	text5
+  1311  007B88                     __ptext5:
+  1312                           	callstack 0
+  1313  007B88                     _secuencial_Efecto2:
+  1314                           	callstack 30
+  1315  007B88                     
+  1316                           ;secuencia_main.c: 82:     for (int i = 0, j = 7; i < 8; i++, j--) {
+  1317  007B88  0E00               	movlw	0
+  1318  007B8A  6E08               	movwf	(secuencial_Efecto2@i+1)^0,c
+  1319  007B8C  0E00               	movlw	0
+  1320  007B8E  6E07               	movwf	secuencial_Efecto2@i^0,c
+  1321  007B90  0E00               	movlw	0
+  1322  007B92  6E06               	movwf	(secuencial_Efecto2@j+1)^0,c
+  1323  007B94  0E07               	movlw	7
+  1324  007B96  6E05               	movwf	secuencial_Efecto2@j^0,c
+  1325  007B98                     l842:
+  1326  007B98  BE08               	btfsc	(secuencial_Efecto2@i+1)^0,7,c
+  1327  007B9A  EFD8  F03D         	goto	u91
+  1328  007B9E  5008               	movf	(secuencial_Efecto2@i+1)^0,w,c
+  1329  007BA0  E109               	bnz	u90
+  1330  007BA2  0E08               	movlw	8
+  1331  007BA4  5C07               	subwf	secuencial_Efecto2@i^0,w,c
+  1332  007BA6  A0D8               	btfss	status,0,c
+  1333  007BA8  EFD8  F03D         	goto	u91
+  1334  007BAC  EFDA  F03D         	goto	u90
+  1335  007BB0                     u91:
+  1336  007BB0  EFDC  F03D         	goto	l846
+  1337  007BB4                     u90:
+  1338  007BB4  EF7B  F03E         	goto	l74
+  1339  007BB8                     l846:
+  1340                           
+  1341                           ;secuencia_main.c: 83:         LATD = (1 << i) + (1 << j);
+  1342  007BB8  C005  F001         	movff	secuencial_Efecto2@j,??_secuencial_Efecto2
+  1343  007BBC  0E01               	movlw	1
+  1344  007BBE  6E02               	movwf	(??_secuencial_Efecto2+1)^0,c
+  1345  007BC0  2A01               	incf	??_secuencial_Efecto2^0,f,c
+  1346  007BC2  EFE5  F03D         	goto	u104
+  1347  007BC6                     u105:
+  1348  007BC6  90D8               	bcf	status,0,c
+  1349  007BC8  3602               	rlcf	(??_secuencial_Efecto2+1)^0,f,c
+  1350  007BCA                     u104:
+  1351  007BCA  2E01               	decfsz	??_secuencial_Efecto2^0,f,c
+  1352  007BCC  EFE3  F03D         	goto	u105
+  1353  007BD0  C007  F003         	movff	secuencial_Efecto2@i,??_secuencial_Efecto2+2
+  1354  007BD4  0E01               	movlw	1
+  1355  007BD6  6E04               	movwf	(??_secuencial_Efecto2+3)^0,c
+  1356  007BD8  2A03               	incf	(??_secuencial_Efecto2+2)^0,f,c
+  1357  007BDA  EFF1  F03D         	goto	u114
+  1358  007BDE                     u115:
+  1359  007BDE  90D8               	bcf	status,0,c
+  1360  007BE0  3604               	rlcf	(??_secuencial_Efecto2+3)^0,f,c
+  1361  007BE2                     u114:
+  1362  007BE2  2E03               	decfsz	(??_secuencial_Efecto2+2)^0,f,c
+  1363  007BE4  EFEF  F03D         	goto	u115
+  1364  007BE8  5004               	movf	(??_secuencial_Efecto2+3)^0,w,c
+  1365  007BEA  2402               	addwf	(??_secuencial_Efecto2+1)^0,w,c
+  1366  007BEC  6E8C               	movwf	140,c	;volatile
+  1367                           
+  1368                           ;secuencia_main.c: 84:         if(velocidad==1){_delay((unsigned long)((50)*(800000/4000
+      +                          .0)));}
+  1369  007BEE  040C               	decf	_velocidad^0,w,c
+  1370  007BF0  100D               	iorwf	(_velocidad+1)^0,w,c
+  1371  007BF2  100E               	iorwf	(_velocidad+2)^0,w,c
+  1372  007BF4  100F               	iorwf	(_velocidad+3)^0,w,c
+  1373  007BF6  A4D8               	btfss	status,2,c
+  1374  007BF8  EF00  F03E         	goto	u121
+  1375  007BFC  EF02  F03E         	goto	u120
+  1376  007C00                     u121:
+  1377  007C00  EF0B  F03E         	goto	l850
+  1378  007C04                     u120:
+  1379  007C04  0E0D               	movlw	13
+  1380  007C06  6E01               	movwf	??_secuencial_Efecto2^0,c
+  1381  007C08  0EFC               	movlw	252
+  1382  007C0A                     u757:
+  1383  007C0A  2EE8               	decfsz	wreg,f,c
+  1384  007C0C  D7FE               	bra	u757
+  1385  007C0E  2E01               	decfsz	??_secuencial_Efecto2^0,f,c
+  1386  007C10  D7FC               	bra	u757
+  1387  007C12  EF4C  F03E         	goto	l862
+  1388  007C16                     l850:
+  1389  007C16  0E02               	movlw	2
+  1390  007C18  180C               	xorwf	_velocidad^0,w,c
+  1391  007C1A  100D               	iorwf	(_velocidad+1)^0,w,c
+  1392  007C1C  100E               	iorwf	(_velocidad+2)^0,w,c
+  1393  007C1E  100F               	iorwf	(_velocidad+3)^0,w,c
+  1394  007C20  A4D8               	btfss	status,2,c
+  1395  007C22  EF15  F03E         	goto	u131
+  1396  007C26  EF17  F03E         	goto	u130
+  1397  007C2A                     u131:
+  1398  007C2A  EF21  F03E         	goto	l854
+  1399  007C2E                     u130:
+  1400  007C2E  0E1A               	movlw	26
+  1401  007C30  6E01               	movwf	??_secuencial_Efecto2^0,c
+  1402  007C32  0EF8               	movlw	248
+  1403  007C34                     u767:
+  1404  007C34  2EE8               	decfsz	wreg,f,c
+  1405  007C36  D7FE               	bra	u767
+  1406  007C38  2E01               	decfsz	??_secuencial_Efecto2^0,f,c
+  1407  007C3A  D7FC               	bra	u767
+  1408  007C3C  D000               	nop2	
+  1409  007C3E  EF4C  F03E         	goto	l862
+  1410  007C42                     l854:
+  1411  007C42  0E03               	movlw	3
+  1412  007C44  180C               	xorwf	_velocidad^0,w,c
+  1413  007C46  100D               	iorwf	(_velocidad+1)^0,w,c
+  1414  007C48  100E               	iorwf	(_velocidad+2)^0,w,c
+  1415  007C4A  100F               	iorwf	(_velocidad+3)^0,w,c
+  1416  007C4C  A4D8               	btfss	status,2,c
+  1417  007C4E  EF2B  F03E         	goto	u141
+  1418  007C52  EF2D  F03E         	goto	u140
+  1419  007C56                     u141:
+  1420  007C56  EF36  F03E         	goto	l858
+  1421  007C5A                     u140:
+  1422  007C5A  0E34               	movlw	52
+  1423  007C5C  6E01               	movwf	??_secuencial_Efecto2^0,c
+  1424  007C5E  0EF2               	movlw	242
+  1425  007C60                     u777:
+  1426  007C60  2EE8               	decfsz	wreg,f,c
+  1427  007C62  D7FE               	bra	u777
+  1428  007C64  2E01               	decfsz	??_secuencial_Efecto2^0,f,c
+  1429  007C66  D7FC               	bra	u777
+  1430  007C68  EF4C  F03E         	goto	l862
+  1431  007C6C                     l858:
+  1432  007C6C  0E04               	movlw	4
+  1433  007C6E  180C               	xorwf	_velocidad^0,w,c
+  1434  007C70  100D               	iorwf	(_velocidad+1)^0,w,c
+  1435  007C72  100E               	iorwf	(_velocidad+2)^0,w,c
+  1436  007C74  100F               	iorwf	(_velocidad+3)^0,w,c
+  1437  007C76  A4D8               	btfss	status,2,c
+  1438  007C78  EF40  F03E         	goto	u151
+  1439  007C7C  EF42  F03E         	goto	u150
+  1440  007C80                     u151:
+  1441  007C80  EF4C  F03E         	goto	l68
+  1442  007C84                     u150:
+  1443  007C84  0E68               	movlw	104
+  1444  007C86  6E01               	movwf	??_secuencial_Efecto2^0,c
+  1445  007C88  0EE4               	movlw	228
+  1446  007C8A                     u787:
+  1447  007C8A  2EE8               	decfsz	wreg,f,c
+  1448  007C8C  D7FE               	bra	u787
+  1449  007C8E  2E01               	decfsz	??_secuencial_Efecto2^0,f,c
+  1450  007C90  D7FC               	bra	u787
+  1451  007C92  D000               	nop2	
+  1452  007C94  EF4C  F03E         	goto	l862
+  1453  007C98                     l68:
+  1454  007C98                     l862:
+  1455                           
+  1456                           ;secuencia_main.c: 89:         if (!PORTBbits.RB6) {
+  1457  007C98  BC81               	btfsc	129,6,c	;volatile
+  1458  007C9A  EF51  F03E         	goto	u161
+  1459  007C9E  EF53  F03E         	goto	u160
+  1460  007CA2                     u161:
+  1461  007CA2  EF74  F03E         	goto	l870
+  1462  007CA6                     u160:
+  1463  007CA6                     
+  1464                           ;secuencia_main.c: 90:             _delay((unsigned long)((50)*(800000/4000.0)));
+  1465  007CA6  0E0D               	movlw	13
+  1466  007CA8  6E01               	movwf	??_secuencial_Efecto2^0,c
+  1467  007CAA  0EFC               	movlw	252
+  1468  007CAC                     u797:
+  1469  007CAC  2EE8               	decfsz	wreg,f,c
+  1470  007CAE  D7FE               	bra	u797
+  1471  007CB0  2E01               	decfsz	??_secuencial_Efecto2^0,f,c
+  1472  007CB2  D7FC               	bra	u797
+  1473  007CB4                     
+  1474                           ;secuencia_main.c: 91:             if(++velocidad==5){velocidad=1;}
+  1475  007CB4  0E01               	movlw	1
+  1476  007CB6  260C               	addwf	_velocidad^0,f,c
+  1477  007CB8  0E00               	movlw	0
+  1478  007CBA  220D               	addwfc	(_velocidad+1)^0,f,c
+  1479  007CBC  220E               	addwfc	(_velocidad+2)^0,f,c
+  1480  007CBE  220F               	addwfc	(_velocidad+3)^0,f,c
+  1481  007CC0  0E05               	movlw	5
+  1482  007CC2  180C               	xorwf	_velocidad^0,w,c
+  1483  007CC4  100D               	iorwf	(_velocidad+1)^0,w,c
+  1484  007CC6  100E               	iorwf	(_velocidad+2)^0,w,c
+  1485  007CC8  100F               	iorwf	(_velocidad+3)^0,w,c
+  1486  007CCA  A4D8               	btfss	status,2,c
+  1487  007CCC  EF6A  F03E         	goto	u171
+  1488  007CD0  EF6C  F03E         	goto	u170
+  1489  007CD4                     u171:
+  1490  007CD4  EF74  F03E         	goto	l870
+  1491  007CD8                     u170:
+  1492  007CD8  0E01               	movlw	1
+  1493  007CDA  6E0C               	movwf	_velocidad^0,c
+  1494  007CDC  0E00               	movlw	0
+  1495  007CDE  6E0D               	movwf	(_velocidad+1)^0,c
+  1496  007CE0  0E00               	movlw	0
+  1497  007CE2  6E0E               	movwf	(_velocidad+2)^0,c
+  1498  007CE4  0E00               	movlw	0
+  1499  007CE6  6E0F               	movwf	(_velocidad+3)^0,c
+  1500  007CE8                     l870:
+  1501                           
+  1502                           ;secuencia_main.c: 93:     }
+  1503  007CE8  4A07               	infsnz	secuencial_Efecto2@i^0,f,c
+  1504  007CEA  2A08               	incf	(secuencial_Efecto2@i+1)^0,f,c
+  1505  007CEC  0605               	decf	secuencial_Efecto2@j^0,f,c
+  1506  007CEE  A0D8               	btfss	status,0,c
+  1507  007CF0  0606               	decf	(secuencial_Efecto2@j+1)^0,f,c
+  1508  007CF2  EFCC  F03D         	goto	l842
+  1509  007CF6                     l74:
+  1510  007CF6  0012               	return		;funcret
+  1511  007CF8                     __end_of_secuencial_Efecto2:
+  1512                           	callstack 0
+  1513                           
+  1514 ;; *************** function _secuencial_Efecto1 *****************
+  1515 ;; Defined at:
+  1516 ;;		line 66 in file "secuencia_main.c"
+  1517 ;; Parameters:    Size  Location     Type
+  1518 ;;		None
+  1519 ;; Auto vars:     Size  Location     Type
+  1520 ;;  i               2    2[COMRAM] int 
+  1521 ;; Return value:  Size  Location     Type
+  1522 ;;                  1    wreg      void 
+  1523 ;; Registers used:
+  1524 ;;		wreg, status,2, status,0
+  1525 ;; Tracked objects:
+  1526 ;;		On entry : 0/0
+  1527 ;;		On exit  : 0/0
+  1528 ;;		Unchanged: 0/0
+  1529 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+  1530 ;;      Params:         0       0       0       0       0       0       0       0       0
+  1531 ;;      Locals:         2       0       0       0       0       0       0       0       0
+  1532 ;;      Temps:          2       0       0       0       0       0       0       0       0
+  1533 ;;      Totals:         4       0       0       0       0       0       0       0       0
+  1534 ;;Total ram usage:        4 bytes
+  1535 ;; Hardware stack levels used:    1
+  1536 ;; This function calls:
+  1537 ;;		Nothing
+  1538 ;; This function is called by:
+  1539 ;;		_main
+  1540 ;; This function uses a non-reentrant model
+  1541 ;;
+  1542                           
+  1543                           	psect	text6
+  1544  00778A                     __ptext6:
+  1545                           	callstack 0
+  1546  00778A                     _secuencial_Efecto1:
+  1547                           	callstack 30
+  1548  00778A                     
+  1549                           ;secuencia_main.c: 67:     for (int i = 0; i < 8; i++) {
+  1550  00778A  0E00               	movlw	0
+  1551  00778C  6E04               	movwf	(secuencial_Efecto1@i+1)^0,c
+  1552  00778E  0E00               	movlw	0
+  1553  007790  6E03               	movwf	secuencial_Efecto1@i^0,c
+  1554  007792                     l808:
+  1555  007792  BE04               	btfsc	(secuencial_Efecto1@i+1)^0,7,c
+  1556  007794  EFD5  F03B         	goto	u11
+  1557  007798  5004               	movf	(secuencial_Efecto1@i+1)^0,w,c
+  1558  00779A  E109               	bnz	u10
+  1559  00779C  0E08               	movlw	8
+  1560  00779E  5C03               	subwf	secuencial_Efecto1@i^0,w,c
+  1561  0077A0  A0D8               	btfss	status,0,c
+  1562  0077A2  EFD5  F03B         	goto	u11
+  1563  0077A6  EFD7  F03B         	goto	u10
+  1564  0077AA                     u11:
+  1565  0077AA  EFD9  F03B         	goto	l812
+  1566  0077AE                     u10:
+  1567  0077AE  EF68  F03C         	goto	l60
+  1568  0077B2                     l812:
+  1569                           
+  1570                           ;secuencia_main.c: 68:         LATD = 1 << i;
+  1571  0077B2  C003  F001         	movff	secuencial_Efecto1@i,??_secuencial_Efecto1
+  1572  0077B6  0E01               	movlw	1
+  1573  0077B8  6E02               	movwf	(??_secuencial_Efecto1+1)^0,c
+  1574  0077BA  2A01               	incf	??_secuencial_Efecto1^0,f,c
+  1575  0077BC  EFE2  F03B         	goto	u24
+  1576  0077C0                     u25:
+  1577  0077C0  90D8               	bcf	status,0,c
+  1578  0077C2  3602               	rlcf	(??_secuencial_Efecto1+1)^0,f,c
+  1579  0077C4                     u24:
+  1580  0077C4  2E01               	decfsz	??_secuencial_Efecto1^0,f,c
+  1581  0077C6  EFE0  F03B         	goto	u25
+  1582  0077CA  5002               	movf	(??_secuencial_Efecto1+1)^0,w,c
+  1583  0077CC  6E8C               	movwf	140,c	;volatile
+  1584                           
+  1585                           ;secuencia_main.c: 69:         if(velocidad==1){_delay((unsigned long)((50)*(800000/4000
+      +                          .0)));}
+  1586  0077CE  040C               	decf	_velocidad^0,w,c
+  1587  0077D0  100D               	iorwf	(_velocidad+1)^0,w,c
+  1588  0077D2  100E               	iorwf	(_velocidad+2)^0,w,c
+  1589  0077D4  100F               	iorwf	(_velocidad+3)^0,w,c
+  1590  0077D6  A4D8               	btfss	status,2,c
+  1591  0077D8  EFF0  F03B         	goto	u31
+  1592  0077DC  EFF2  F03B         	goto	u30
+  1593  0077E0                     u31:
+  1594  0077E0  EFFB  F03B         	goto	l816
+  1595  0077E4                     u30:
+  1596  0077E4  0E0D               	movlw	13
+  1597  0077E6  6E01               	movwf	??_secuencial_Efecto1^0,c
+  1598  0077E8  0EFC               	movlw	252
+  1599  0077EA                     u807:
+  1600  0077EA  2EE8               	decfsz	wreg,f,c
+  1601  0077EC  D7FE               	bra	u807
+  1602  0077EE  2E01               	decfsz	??_secuencial_Efecto1^0,f,c
+  1603  0077F0  D7FC               	bra	u807
+  1604  0077F2  EF3C  F03C         	goto	l828
+  1605  0077F6                     l816:
+  1606  0077F6  0E02               	movlw	2
+  1607  0077F8  180C               	xorwf	_velocidad^0,w,c
+  1608  0077FA  100D               	iorwf	(_velocidad+1)^0,w,c
+  1609  0077FC  100E               	iorwf	(_velocidad+2)^0,w,c
+  1610  0077FE  100F               	iorwf	(_velocidad+3)^0,w,c
+  1611  007800  A4D8               	btfss	status,2,c
+  1612  007802  EF05  F03C         	goto	u41
+  1613  007806  EF07  F03C         	goto	u40
+  1614  00780A                     u41:
+  1615  00780A  EF11  F03C         	goto	l820
+  1616  00780E                     u40:
+  1617  00780E  0E1A               	movlw	26
+  1618  007810  6E01               	movwf	??_secuencial_Efecto1^0,c
+  1619  007812  0EF8               	movlw	248
+  1620  007814                     u817:
+  1621  007814  2EE8               	decfsz	wreg,f,c
+  1622  007816  D7FE               	bra	u817
+  1623  007818  2E01               	decfsz	??_secuencial_Efecto1^0,f,c
+  1624  00781A  D7FC               	bra	u817
+  1625  00781C  D000               	nop2	
+  1626  00781E  EF3C  F03C         	goto	l828
+  1627  007822                     l820:
+  1628  007822  0E03               	movlw	3
+  1629  007824  180C               	xorwf	_velocidad^0,w,c
+  1630  007826  100D               	iorwf	(_velocidad+1)^0,w,c
+  1631  007828  100E               	iorwf	(_velocidad+2)^0,w,c
+  1632  00782A  100F               	iorwf	(_velocidad+3)^0,w,c
+  1633  00782C  A4D8               	btfss	status,2,c
+  1634  00782E  EF1B  F03C         	goto	u51
+  1635  007832  EF1D  F03C         	goto	u50
+  1636  007836                     u51:
+  1637  007836  EF26  F03C         	goto	l824
+  1638  00783A                     u50:
+  1639  00783A  0E34               	movlw	52
+  1640  00783C  6E01               	movwf	??_secuencial_Efecto1^0,c
+  1641  00783E  0EF2               	movlw	242
+  1642  007840                     u827:
+  1643  007840  2EE8               	decfsz	wreg,f,c
+  1644  007842  D7FE               	bra	u827
+  1645  007844  2E01               	decfsz	??_secuencial_Efecto1^0,f,c
+  1646  007846  D7FC               	bra	u827
+  1647  007848  EF3C  F03C         	goto	l828
+  1648  00784C                     l824:
+  1649  00784C  0E04               	movlw	4
+  1650  00784E  180C               	xorwf	_velocidad^0,w,c
+  1651  007850  100D               	iorwf	(_velocidad+1)^0,w,c
+  1652  007852  100E               	iorwf	(_velocidad+2)^0,w,c
+  1653  007854  100F               	iorwf	(_velocidad+3)^0,w,c
+  1654  007856  A4D8               	btfss	status,2,c
+  1655  007858  EF30  F03C         	goto	u61
+  1656  00785C  EF32  F03C         	goto	u60
+  1657  007860                     u61:
+  1658  007860  EF3C  F03C         	goto	l54
+  1659  007864                     u60:
+  1660  007864  0E68               	movlw	104
+  1661  007866  6E01               	movwf	??_secuencial_Efecto1^0,c
+  1662  007868  0EE4               	movlw	228
+  1663  00786A                     u837:
+  1664  00786A  2EE8               	decfsz	wreg,f,c
+  1665  00786C  D7FE               	bra	u837
+  1666  00786E  2E01               	decfsz	??_secuencial_Efecto1^0,f,c
+  1667  007870  D7FC               	bra	u837
+  1668  007872  D000               	nop2	
+  1669  007874  EF3C  F03C         	goto	l828
+  1670  007878                     l54:
+  1671  007878                     l828:
+  1672                           
+  1673                           ;secuencia_main.c: 74:         if (!PORTBbits.RB6) {
+  1674  007878  BC81               	btfsc	129,6,c	;volatile
+  1675  00787A  EF41  F03C         	goto	u71
+  1676  00787E  EF43  F03C         	goto	u70
+  1677  007882                     u71:
+  1678  007882  EF64  F03C         	goto	l836
+  1679  007886                     u70:
+  1680  007886                     
+  1681                           ;secuencia_main.c: 75:             _delay((unsigned long)((50)*(800000/4000.0)));
+  1682  007886  0E0D               	movlw	13
+  1683  007888  6E01               	movwf	??_secuencial_Efecto1^0,c
+  1684  00788A  0EFC               	movlw	252
+  1685  00788C                     u847:
+  1686  00788C  2EE8               	decfsz	wreg,f,c
+  1687  00788E  D7FE               	bra	u847
+  1688  007890  2E01               	decfsz	??_secuencial_Efecto1^0,f,c
+  1689  007892  D7FC               	bra	u847
+  1690  007894                     
+  1691                           ;secuencia_main.c: 76:             if(++velocidad==5){velocidad=1;}
+  1692  007894  0E01               	movlw	1
+  1693  007896  260C               	addwf	_velocidad^0,f,c
+  1694  007898  0E00               	movlw	0
+  1695  00789A  220D               	addwfc	(_velocidad+1)^0,f,c
+  1696  00789C  220E               	addwfc	(_velocidad+2)^0,f,c
+  1697  00789E  220F               	addwfc	(_velocidad+3)^0,f,c
+  1698  0078A0  0E05               	movlw	5
+  1699  0078A2  180C               	xorwf	_velocidad^0,w,c
+  1700  0078A4  100D               	iorwf	(_velocidad+1)^0,w,c
+  1701  0078A6  100E               	iorwf	(_velocidad+2)^0,w,c
+  1702  0078A8  100F               	iorwf	(_velocidad+3)^0,w,c
+  1703  0078AA  A4D8               	btfss	status,2,c
+  1704  0078AC  EF5A  F03C         	goto	u81
+  1705  0078B0  EF5C  F03C         	goto	u80
+  1706  0078B4                     u81:
+  1707  0078B4  EF64  F03C         	goto	l836
+  1708  0078B8                     u80:
+  1709  0078B8  0E01               	movlw	1
+  1710  0078BA  6E0C               	movwf	_velocidad^0,c
+  1711  0078BC  0E00               	movlw	0
+  1712  0078BE  6E0D               	movwf	(_velocidad+1)^0,c
+  1713  0078C0  0E00               	movlw	0
+  1714  0078C2  6E0E               	movwf	(_velocidad+2)^0,c
+  1715  0078C4  0E00               	movlw	0
+  1716  0078C6  6E0F               	movwf	(_velocidad+3)^0,c
+  1717  0078C8                     l836:
+  1718                           
+  1719                           ;secuencia_main.c: 78:     }
+  1720  0078C8  4A03               	infsnz	secuencial_Efecto1@i^0,f,c
+  1721  0078CA  2A04               	incf	(secuencial_Efecto1@i+1)^0,f,c
+  1722  0078CC  EFC9  F03B         	goto	l808
+  1723  0078D0                     l60:
+  1724  0078D0  0012               	return		;funcret
+  1725  0078D2                     __end_of_secuencial_Efecto1:
+  1726                           	callstack 0
+  1727  0000                     
+  1728                           	psect	rparam
+  1729  0000                     
+  1730                           	psect	idloc
+  1731                           
+  1732                           ;Config register IDLOC0 @ 0x200000
+  1733                           ;	unspecified, using default values
+  1734  200000                     	org	2097152
+  1735  200000  FF                 	db	255
+  1736                           
+  1737                           ;Config register IDLOC1 @ 0x200001
+  1738                           ;	unspecified, using default values
+  1739  200001                     	org	2097153
+  1740  200001  FF                 	db	255
+  1741                           
+  1742                           ;Config register IDLOC2 @ 0x200002
+  1743                           ;	unspecified, using default values
+  1744  200002                     	org	2097154
+  1745  200002  FF                 	db	255
+  1746                           
+  1747                           ;Config register IDLOC3 @ 0x200003
+  1748                           ;	unspecified, using default values
+  1749  200003                     	org	2097155
+  1750  200003  FF                 	db	255
+  1751                           
+  1752                           ;Config register IDLOC4 @ 0x200004
+  1753                           ;	unspecified, using default values
+  1754  200004                     	org	2097156
+  1755  200004  FF                 	db	255
+  1756                           
+  1757                           ;Config register IDLOC5 @ 0x200005
+  1758                           ;	unspecified, using default values
+  1759  200005                     	org	2097157
+  1760  200005  FF                 	db	255
+  1761                           
+  1762                           ;Config register IDLOC6 @ 0x200006
+  1763                           ;	unspecified, using default values
+  1764  200006                     	org	2097158
+  1765  200006  FF                 	db	255
+  1766                           
+  1767                           ;Config register IDLOC7 @ 0x200007
+  1768                           ;	unspecified, using default values
+  1769  200007                     	org	2097159
+  1770  200007  FF                 	db	255
+  1771                           
+  1772                           	psect	config
+  1773                           
+  1774                           ;Config register CONFIG1L @ 0x300000
+  1775                           ;	unspecified, using default values
+  1776                           ;	PLL Prescaler Selection bits
+  1777                           ;	PLLDIV = 0x0, unprogrammed default
+  1778                           ;	System Clock Postscaler Selection bits
+  1779                           ;	CPUDIV = 0x0, unprogrammed default
+  1780                           ;	USB Clock Selection bit (used in Full-Speed USB mode only; UCFG:FSEN = 1)
+  1781                           ;	USBDIV = 0x0, unprogrammed default
+  1782  300000                     	org	3145728
+  1783  300000  00                 	db	0
+  1784                           
+  1785                           ;Config register CONFIG1H @ 0x300001
+  1786                           ;	Oscillator Selection bits
+  1787                           ;	FOSC = INTOSC_EC, Internal oscillator, CLKO function on RA6, EC used by USB (INTCKO)
+  1788                           ;	Fail-Safe Clock Monitor Enable bit
+  1789                           ;	FCMEN = OFF, Fail-Safe Clock Monitor disabled
+  1790                           ;	Internal/External Oscillator Switchover bit
+  1791                           ;	IESO = OFF, Oscillator Switchover mode disabled
+  1792  300001                     	org	3145729
+  1793  300001  09                 	db	9
+  1794                           
+  1795                           ;Config register CONFIG2L @ 0x300002
+  1796                           ;	Power-up Timer Enable bit
+  1797                           ;	PWRT = OFF, PWRT disabled
+  1798                           ;	Brown-out Reset Enable bits
+  1799                           ;	BOR = ON, Brown-out Reset enabled in hardware only (SBOREN is disabled)
+  1800                           ;	Brown-out Reset Voltage bits
+  1801                           ;	BORV = 3, Minimum setting 2.05V
+  1802                           ;	USB Voltage Regulator Enable bit
+  1803                           ;	VREGEN = OFF, USB voltage regulator disabled
+  1804  300002                     	org	3145730
+  1805  300002  1F                 	db	31
+  1806                           
+  1807                           ;Config register CONFIG2H @ 0x300003
+  1808                           ;	Watchdog Timer Enable bit
+  1809                           ;	WDT = OFF, WDT disabled (control is placed on the SWDTEN bit)
+  1810                           ;	Watchdog Timer Postscale Select bits
+  1811                           ;	WDTPS = 32768, 1:32768
+  1812  300003                     	org	3145731
+  1813  300003  1E                 	db	30
+  1814                           
+  1815                           ; Padding undefined space
+  1816  300004                     	org	3145732
+  1817  300004  FF                 	db	255
+  1818                           
+  1819                           ;Config register CONFIG3H @ 0x300005
+  1820                           ;	CCP2 MUX bit
+  1821                           ;	CCP2MX = ON, CCP2 input/output is multiplexed with RC1
+  1822                           ;	PORTB A/D Enable bit
+  1823                           ;	PBADEN = OFF, PORTB<4:0> pins are configured as digital I/O on Reset
+  1824                           ;	Low-Power Timer 1 Oscillator Enable bit
+  1825                           ;	LPT1OSC = OFF, Timer1 configured for higher power operation
+  1826                           ;	MCLR Pin Enable bit
+  1827                           ;	MCLRE = ON, MCLR pin enabled; RE3 input pin disabled
+  1828  300005                     	org	3145733
+  1829  300005  81                 	db	129
+  1830                           
+  1831                           ;Config register CONFIG4L @ 0x300006
+  1832                           ;	Stack Full/Underflow Reset Enable bit
+  1833                           ;	STVREN = ON, Stack full/underflow will cause Reset
+  1834                           ;	Single-Supply ICSP Enable bit
+  1835                           ;	LVP = OFF, Single-Supply ICSP disabled
+  1836                           ;	Dedicated In-Circuit Debug/Programming Port (ICPORT) Enable bit
+  1837                           ;	ICPRT = OFF, ICPORT disabled
+  1838                           ;	Extended Instruction Set Enable bit
+  1839                           ;	XINST = OFF, Instruction set extension and Indexed Addressing mode disabled (Legacy mo
+      +                          de)
+  1840                           ;	Background Debugger Enable bit
+  1841                           ;	DEBUG = 0x1, unprogrammed default
+  1842  300006                     	org	3145734
+  1843  300006  81                 	db	129
+  1844                           
+  1845                           ; Padding undefined space
+  1846  300007                     	org	3145735
+  1847  300007  FF                 	db	255
+  1848                           
+  1849                           ;Config register CONFIG5L @ 0x300008
+  1850                           ;	Code Protection bit
+  1851                           ;	CP0 = OFF, Block 0 (000800-001FFFh) is not code-protected
+  1852                           ;	Code Protection bit
+  1853                           ;	CP1 = OFF, Block 1 (002000-003FFFh) is not code-protected
+  1854                           ;	Code Protection bit
+  1855                           ;	CP2 = OFF, Block 2 (004000-005FFFh) is not code-protected
+  1856                           ;	Code Protection bit
+  1857                           ;	CP3 = OFF, Block 3 (006000-007FFFh) is not code-protected
+  1858  300008                     	org	3145736
+  1859  300008  0F                 	db	15
+  1860                           
+  1861                           ;Config register CONFIG5H @ 0x300009
+  1862                           ;	Boot Block Code Protection bit
+  1863                           ;	CPB = OFF, Boot block (000000-0007FFh) is not code-protected
+  1864                           ;	Data EEPROM Code Protection bit
+  1865                           ;	CPD = OFF, Data EEPROM is not code-protected
+  1866  300009                     	org	3145737
+  1867  300009  C0                 	db	192
+  1868                           
+  1869                           ;Config register CONFIG6L @ 0x30000A
+  1870                           ;	Write Protection bit
+  1871                           ;	WRT0 = OFF, Block 0 (000800-001FFFh) is not write-protected
+  1872                           ;	Write Protection bit
+  1873                           ;	WRT1 = OFF, Block 1 (002000-003FFFh) is not write-protected
+  1874                           ;	Write Protection bit
+  1875                           ;	WRT2 = OFF, Block 2 (004000-005FFFh) is not write-protected
+  1876                           ;	Write Protection bit
+  1877                           ;	WRT3 = OFF, Block 3 (006000-007FFFh) is not write-protected
+  1878  30000A                     	org	3145738
+  1879  30000A  0F                 	db	15
+  1880                           
+  1881                           ;Config register CONFIG6H @ 0x30000B
+  1882                           ;	Configuration Register Write Protection bit
+  1883                           ;	WRTC = OFF, Configuration registers (300000-3000FFh) are not write-protected
+  1884                           ;	Boot Block Write Protection bit
+  1885                           ;	WRTB = OFF, Boot block (000000-0007FFh) is not write-protected
+  1886                           ;	Data EEPROM Write Protection bit
+  1887                           ;	WRTD = OFF, Data EEPROM is not write-protected
+  1888  30000B                     	org	3145739
+  1889  30000B  E0                 	db	224
+  1890                           
+  1891                           ;Config register CONFIG7L @ 0x30000C
+  1892                           ;	Table Read Protection bit
+  1893                           ;	EBTR0 = OFF, Block 0 (000800-001FFFh) is not protected from table reads executed in ot
+      +                          her blocks
+  1894                           ;	Table Read Protection bit
+  1895                           ;	EBTR1 = OFF, Block 1 (002000-003FFFh) is not protected from table reads executed in ot
+      +                          her blocks
+  1896                           ;	Table Read Protection bit
+  1897                           ;	EBTR2 = OFF, Block 2 (004000-005FFFh) is not protected from table reads executed in ot
+      +                          her blocks
+  1898                           ;	Table Read Protection bit
+  1899                           ;	EBTR3 = OFF, Block 3 (006000-007FFFh) is not protected from table reads executed in ot
+      +                          her blocks
+  1900  30000C                     	org	3145740
+  1901  30000C  0F                 	db	15
+  1902                           
+  1903                           ;Config register CONFIG7H @ 0x30000D
+  1904                           ;	Boot Block Table Read Protection bit
+  1905                           ;	EBTRB = OFF, Boot block (000000-0007FFh) is not protected from table reads executed in
+      +                           other blocks
+  1906  30000D                     	org	3145741
+  1907  30000D  40                 	db	64
+  1908                           tosu	equ	0xFFF
+  1909                           tosh	equ	0xFFE
+  1910                           tosl	equ	0xFFD
+  1911                           stkptr	equ	0xFFC
+  1912                           pclatu	equ	0xFFB
+  1913                           pclath	equ	0xFFA
+  1914                           pcl	equ	0xFF9
+  1915                           tblptru	equ	0xFF8
+  1916                           tblptrh	equ	0xFF7
+  1917                           tblptrl	equ	0xFF6
+  1918                           tablat	equ	0xFF5
+  1919                           prodh	equ	0xFF4
+  1920                           prodl	equ	0xFF3
+  1921                           indf0	equ	0xFEF
+  1922                           postinc0	equ	0xFEE
+  1923                           postdec0	equ	0xFED
+  1924                           preinc0	equ	0xFEC
+  1925                           plusw0	equ	0xFEB
+  1926                           fsr0h	equ	0xFEA
+  1927                           fsr0l	equ	0xFE9
+  1928                           wreg	equ	0xFE8
+  1929                           indf1	equ	0xFE7
+  1930                           postinc1	equ	0xFE6
+  1931                           postdec1	equ	0xFE5
+  1932                           preinc1	equ	0xFE4
+  1933                           plusw1	equ	0xFE3
+  1934                           fsr1h	equ	0xFE2
+  1935                           fsr1l	equ	0xFE1
+  1936                           bsr	equ	0xFE0
+  1937                           indf2	equ	0xFDF
+  1938                           postinc2	equ	0xFDE
+  1939                           postdec2	equ	0xFDD
+  1940                           preinc2	equ	0xFDC
+  1941                           plusw2	equ	0xFDB
+  1942                           fsr2h	equ	0xFDA
+  1943                           fsr2l	equ	0xFD9
+  1944                           status	equ	0xFD8
+
+Data Sizes:
+    Strings     0
+    Constant    0
+    Data        5
+    BSS         0
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMRAM           95     11      16
+    BANK0           160      0       0
+    BANK1           256      0       0
+    BANK2           256      0       0
+    BANK3           256      0       0
+    BANK4           256      0       0
+    BANK5           256      0       0
+    BANK6           256      0       0
+    BANK7           256      0       0
+
+Pointer List with Targets:
+
+    None.
+
+Critical Paths under _main in COMRAM
+
+    _main->_secuencial_Efecto4
+
+Critical Paths under _main in BANK0
+
+    None.
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Critical Paths under _main in BANK3
+
+    None.
+
+Critical Paths under _main in BANK4
+
+    None.
+
+Critical Paths under _main in BANK5
+
+    None.
+
+Critical Paths under _main in BANK6
+
+    None.
+
+Critical Paths under _main in BANK7
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                 2     2      0     360
+                                              9 COMRAM     2     2      0
+                 _secuencial_Efecto1
+                 _secuencial_Efecto2
+                 _secuencial_Efecto3
+                 _secuencial_Efecto4
+                 _secuencial_Efecto5
+                 _secuencial_Efecto6
+ ---------------------------------------------------------------------------------
+ (1) _secuencial_Efecto6                                   8     8      0      60
+                                              0 COMRAM     8     8      0
+ ---------------------------------------------------------------------------------
+ (1) _secuencial_Efecto5                                   8     8      0      60
+                                              0 COMRAM     8     8      0
+ ---------------------------------------------------------------------------------
+ (1) _secuencial_Efecto4                                   9     9      0      90
+                                              0 COMRAM     9     9      0
+ ---------------------------------------------------------------------------------
+ (1) _secuencial_Efecto3                                   4     4      0      45
+                                              0 COMRAM     4     4      0
+ ---------------------------------------------------------------------------------
+ (1) _secuencial_Efecto2                                   8     8      0      60
+                                              0 COMRAM     8     8      0
+ ---------------------------------------------------------------------------------
+ (1) _secuencial_Efecto1                                   4     4      0      45
+                                              0 COMRAM     4     4      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 1
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+   _secuencial_Efecto1
+   _secuencial_Efecto2
+   _secuencial_Efecto3
+   _secuencial_Efecto4
+   _secuencial_Efecto5
+   _secuencial_Efecto6
+
+ Address spaces:
+Name               Size   Autos  Total    Cost      Usage
+BIGRAM             7FF      0       0      21        0.0%
+EEDATA             100      0       0       0        0.0%
+BITBANK7           100      0       0      18        0.0%
+BANK7              100      0       0      19        0.0%
+BITBANK6           100      0       0      16        0.0%
+BANK6              100      0       0      17        0.0%
+BITBANK5           100      0       0      14        0.0%
+BANK5              100      0       0      15        0.0%
+BITBANK4           100      0       0      12        0.0%
+BANK4              100      0       0      13        0.0%
+BITBANK3           100      0       0      10        0.0%
+BANK3              100      0       0      11        0.0%
+BITBANK2           100      0       0       8        0.0%
+BANK2              100      0       0       9        0.0%
+BITBANK1           100      0       0       6        0.0%
+BANK1              100      0       0       7        0.0%
+BITBANK0            A0      0       0       4        0.0%
+BANK0               A0      0       0       5        0.0%
+BITCOMRAM           5F      0       0       0        0.0%
+COMRAM              5F      B      10       1       16.8%
+BITSFR               0      0       0     200        0.0%
+SFR                  0      0       0     200        0.0%
+STACK                0      0       0       2        0.0%
+NULL                 0      0       0       0        0.0%
+ABS                  0      0      10      20        0.0%
+DATA                 0      0      10       3        0.0%
+CODE                 0      0       0       0        0.0%
+
+
+Microchip Technology PIC18 Macro Assembler V2.31 build 20201012212115 
+Symbol Table                                                                                   Wed Nov 18 19:22:52 2020
+
+                         l60 78D0                           l54 7878                           l74 7CF6  
+                         l82 79C0                           l68 7C98                           l88 7A18  
+                         l96 7F8E                           u10 77AE                           u11 77AA  
+                         u30 77E4                           u31 77E0                           u40 780E  
+                         u24 77C4                           u41 780A                           u25 77C0  
+                         u50 783A                           u51 7836                           u60 7864  
+                         u61 7860                           u70 7886                           u71 7882  
+                         u80 78B8                           u81 78B4                           u90 7BB4  
+                         u91 7BB0                          l102 7FFE                          l110 7E06  
+                        l130 7B86                          l116 7E66                          l124 7B2A  
+                        l820 7822                          l812 77B2                          l900 79CE  
+                        l830 7886                          l822 783A                          l814 77E4  
+                        l806 778A                          l902 79DC                          l910 7E68  
+                        l832 7894                          l824 784C                          l816 77F6  
+                        l808 7792                          l840 7B88                          l904 7A00  
+                        l920 7F0C                          l834 78B8                          l826 7864  
+                        l818 780E                          l850 7C16                          l842 7B98  
+                        l906 7A10                          l930 7F7A                          l922 7F24  
+                        l836 78C8                          l828 7878                          l860 7C84  
+                        l852 7C2E                          l940 7FDE                          l924 7F38  
+                        l932 7F8E                          l916 7E80                          l870 7CE8  
+                        l854 7C42                          l862 7C98                          l846 7BB8  
+                        l942 7FE2                          l934 7F9C                          l926 7F50  
+                        l918 7EFA                          l950 7D26                          l872 7CEC  
+                        l864 7CA6                          l856 7C5A                          l848 7C04  
+                        l936 7FAA                          l928 7F62                          l960 7DC8  
+                        l952 7D72                          l944 7CF8                          l866 7CB4  
+                        l858 7C6C                          l890 796A                          l882 78FA  
+                        l938 7FCE                          l970 7E22                          l962 7DDA  
+                        l954 7D84                          l946 7D08                          l868 7CD8  
+                        l892 7982                          l884 792C                          l876 78D2  
+                        l972 7E46                          l964 7DF2                          l956 7D9C  
+                        l980 7A1A                          l894 7994                          l886 793E  
+                        l878 78DA                          l974 7E56                          l958 7DB0  
+                        l966 7E06                          l990 7AA8                          l982 7A2A  
+                        l896 79AC                          l888 7956                          l976 7E5C  
+                        l968 7E14                          l992 7AC0                          l898 79C0  
+                        l994 7AD4                          l986 7A4A                          l996 7AEC  
+                        l988 7A96                          l998 7AFE                          u120 7C04  
+                        u104 7BCA                          u200 792C                          u121 7C00  
+                        u105 7BC6                          u201 7928                          u130 7C2E  
+                        u114 7BE2                          u210 7956                          u131 7C2A  
+                        u115 7BDE                          u211 7952                          u140 7C5A  
+                        u220 7982                          u300 7F50                          u141 7C56  
+                        u221 797E                          u301 7F4C                          u150 7C84  
+                        u230 79AC                          u310 7F7A                          u151 7C80  
+                        u231 79A8                          u311 7F76                          u160 7CA6  
+                        u240 79CE                          u320 7F9C                          u400 7DC8  
+                        u161 7CA2                          u241 79CA                          u321 7F98  
+                        u401 7DC4                          u170 7CD8                          u250 7A00  
+                        u330 7FCE                          u410 7DF2                          u171 7CD4  
+                        u251 79FC                          u331 7FCA                          u411 7DEE  
+                        u180 78F6                          u340 7FFE                          u420 7E14  
+                        u500 7B16                          u181 78F2                          u341 7FFA  
+                        u421 7E10                          u501 7B12                          u430 7E46  
+                        u350 7D22                          u510 7B38                          u431 7E42  
+                        u351 7D1E                          u511 7B34                          u280 7EFA  
+                        u264 7E9E                          u520 7B6A                          u440 7A46  
+                        u281 7EF6                          u265 7E98                          u521 7B66  
+                        u441 7A42                          u194 790C                          u290 7F24  
+                        u274 7ECE                          u530 76F0                          u195 7908  
+                        u291 7F20                          u275 7EC8                          u531 76EC  
+                        u380 7D72                          u364 7D38                          u540 7704  
+                        u381 7D6E                          u365 7D34                          u541 7700  
+                        u390 7D9C                          u374 7D50                          u470 7A96  
+                        u454 7A5C                          u391 7D98                          u607 7D78  
+                        u375 7D4C                          u471 7A92                          u455 7A58  
+                        u480 7AC0                          u464 7A74                          u617 7DA2  
+                        u481 7ABC                          u465 7A70                          u490 7AEC  
+                        u707 7932                          u627 7DCE                          u491 7AE8  
+                        u717 795C                          u637 7DF8                          u557 7A9C  
+                        u807 77EA                          u727 7988                          u647 7E1A  
+                        u567 7AC6                          u817 7814                          u737 79B2  
+                        u657 7F00                          u577 7AF2                          u827 7840  
+                        u747 79D4                          u667 7F2A                          u587 7B1C  
+                        u837 786A                          u757 7C0A                          u677 7F56  
+                        u597 7B3E                          u847 788C                          u767 7C34  
+                        u687 7F80                          u777 7C60                          u697 7FA2  
+                        u787 7C8A                          u797 7CAC                          wreg 000FE8  
+                       l1000 7B16                         l1010 7B7A                         l1002 7B2A  
+                       l1012 7B7E                         l1004 7B38                         l1020 76DE  
+                       l1006 7B46                         l1030 7704                         l1022 76E0  
+                       l1008 7B6A                         l1040 772C                         l1032 770C  
+                       l1024 76E2                         l1016 76D4                         l1042 7734  
+                       l1034 7714                         l1026 76F0                         l1018 76DC  
+                       l1036 771C                         l1028 76F2                         l1038 7724  
+                       l1046 773C                         l1056 7750                         _LATD 000F8C  
+                       _main 76D4                         fsr1l 000FE1                         start 0000  
+               ___param_bank 000000                        ?_main 0001                        _TRISD 000F95  
+                      tablat 000FF5                        status 000FD8              __initialization 76AA  
+               __end_of_main 778A                       ??_main 000A                __activetblptr 000002  
+                     _efecto 0010   __end_of_secuencial_Efecto1 78D2   __end_of_secuencial_Efecto2 7CF8  
+ __end_of_secuencial_Efecto3 7A1A   __end_of_secuencial_Efecto4 8000   __end_of_secuencial_Efecto5 7E68  
+ __end_of_secuencial_Efecto6 7B88                 __pdataCOMRAM 000C                       tblptrh 000FF7  
+                     tblptrl 000FF6                       tblptru 000FF8                   __accesstop 0060  
+    __end_of__initialization 76CA                ___rparam_used 000001               __pcstackCOMRAM 0001  
+        secuencial_Efecto1@i 0003          secuencial_Efecto2@i 0007          secuencial_Efecto2@j 0005  
+        secuencial_Efecto3@i 0003          secuencial_Efecto4@i 0004          secuencial_Efecto5@i 0007  
+        secuencial_Efecto4@m 0006          secuencial_Efecto4@n 0008          secuencial_Efecto5@j 0005  
+        secuencial_Efecto6@i 0007          secuencial_Efecto6@j 0005                      __Hparam 0000  
+                    __Lparam 0000                      __pcinit 76AA                      __ramtop 0800  
+                    __ptext0 76D4                      __ptext1 7A1A                      __ptext2 7CF8  
+                    __ptext3 7E68                      __ptext4 78D2                      __ptext5 7B88  
+                    __ptext6 778A         end_of_initialization 76CA                __Lmediumconst 0000  
+                    postdec1 000FE5                      postinc0 000FEE                    _PORTBbits 000F81  
+                  _TRISBbits 000F93           _secuencial_Efecto1 778A           _secuencial_Efecto2 7B88  
+         _secuencial_Efecto3 78D2           _secuencial_Efecto4 7E68           _secuencial_Efecto5 7CF8  
+         _secuencial_Efecto6 7A1A          ?_secuencial_Efecto1 0001          ?_secuencial_Efecto2 0001  
+        ?_secuencial_Efecto3 0001          ?_secuencial_Efecto4 0001          ?_secuencial_Efecto5 0001  
+        ?_secuencial_Efecto6 0001                __pidataCOMRAM 76A5         ??_secuencial_Efecto1 0001  
+       ??_secuencial_Efecto2 0001         ??_secuencial_Efecto3 0001         ??_secuencial_Efecto4 0001  
+       ??_secuencial_Efecto5 0001         ??_secuencial_Efecto6 0001          start_initialization 76AA  
+                  _velocidad 000C                  _INTCON2bits 000FF1                    copy_data0 76BE  
+                   __Hrparam 0000                     __Lrparam 0000                __size_of_main 00B6  
+__size_of_secuencial_Efecto1 0148  __size_of_secuencial_Efecto2 0170  __size_of_secuencial_Efecto3 0148  
+__size_of_secuencial_Efecto4 0198  __size_of_secuencial_Efecto5 0170  __size_of_secuencial_Efecto6 016E  
